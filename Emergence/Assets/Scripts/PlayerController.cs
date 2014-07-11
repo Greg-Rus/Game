@@ -18,5 +18,8 @@ public class PlayerController : MonoBehaviour {
 		rotation *= Time.deltaTime;
 		transform.Translate(0, 0, translation);
 		transform.Rotate(0, rotation, 0);
+		transform.GetChild (0).rotation = Quaternion.identity;
+
+
 	}
 }

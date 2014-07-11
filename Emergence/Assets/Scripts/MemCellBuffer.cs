@@ -10,6 +10,7 @@ public class MemCellBuffer : MonoBehaviour {
 	private float memCellSize = 1.0f;
 	private Vector3 spawnSpot;
 	private float i;
+	private float j;
 
 	private float oldX;
 	private float oldZ;
@@ -39,14 +40,27 @@ public class MemCellBuffer : MonoBehaviour {
 		if (curZ != oldZ) {
 			i = curX - bufferSize;
 			//for (int i = (int)(curX + (bufferSize * (curX - oldX))); i < (int)(oldX + bufferSize); i++) 
-			while (i <= curX + bufferSize){
-				spawnSpot = new Vector3(i, 0.0f, curZ+((curZ - oldZ)*bufferSize)	);
-				Instantiate(memCell, spawnSpot, Quaternion.identity);
-				print (spawnSpot);
-				i = i + memCellSize;
+			while (i <= curX + bufferSize) {
+					spawnSpot = new Vector3 (i, 0.0f, curZ + ((curZ - oldZ) * bufferSize));
+					Instantiate (memCell, spawnSpot, Quaternion.identity);
+					print (spawnSpot);
+					i = i + memCellSize;
 
 			}
-			oldZ=curZ;
+			oldZ = curZ;
+		}
+		if (curX != oldX) {
+			j = curZ - bufferSize;
+			//for (int i = (int)(curX + (bufferSize * (curX - oldX))); i < (int)(oldX + bufferSize); i++) 
+			while (j <= curZ + bufferSize) {
+				spawnSpot = new Vector3 (curX + ((curX - oldX) * bufferSize), 0.0f, j);
+					Instantiate (memCell, spawnSpot, Quaternion.identity);
+					print (spawnSpot);
+					j = j + memCellSize;
+	
+			}
+			oldX = curX;
+		}
 /*			for (int i = (int)(curX - bufferSize); i < (int)(curX + bufferSize); i++)
 			{
 				spawnSpot = new Vector3(i*memCellSize, 0.0f, (curZ+(oldZ-curZ)*bufferSize)	);
@@ -65,7 +79,7 @@ public class MemCellBuffer : MonoBehaviour {
 //				Instantiate(memCell, spawnSpot, Quaternion.identity);
 //			}
 //			oldX=curX;
-		}
+
 
 	}
 }
