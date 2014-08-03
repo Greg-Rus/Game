@@ -6,7 +6,7 @@ public class MemCellBuffer : MonoBehaviour {
 	private Vector3 CurrentPosition;
 	private float curX;
 	private float curZ;
-	private float bufferSize = 2f;
+	public float bufferSize = 2f;
 	private float memCellSize = 1.0f;
 	private Vector3 spawnSpot;
 	private float i;

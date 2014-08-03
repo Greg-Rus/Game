@@ -15,6 +15,6 @@ public class DieOnCollisionExit : MonoBehaviour {
 
 	void OnTriggerExit() {
 		Destroy (this.gameObject);
-		print ("Destroy!!");
+
 	} 
 }

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿/*
+
+using UnityEngine;
 using System.Collections;
 
 public class MemCellControl : MonoBehaviour {
@@ -67,3 +69,4 @@ public class MemCellControl : MonoBehaviour {
 		return val;
 }
 }
+*/

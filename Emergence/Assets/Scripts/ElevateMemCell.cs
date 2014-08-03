@@ -1,44 +1,47 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class ElevateMemCell : MonoBehaviour {
 	
-	public float defElevation = 0.1f;
-
-	private float dTime;
-	private Vector3 dYposition;
-
-	public float startElevation;
-
-	float testTime = 0f;
-	float testSin;
-	public float waveOffset;
-
+	private float activeSensors = 0;
+	private float lastActiveSensors;
+	public float maxElevation;
+	private float y;
+	private Vector3 position;
 	void Start () {
-		testTime = waveOffset;
-		startElevation = transform.position.y;
+
 
 	}
 	
 
 	void Update () {
-		dYposition = transform.position;
-		dYposition.y = startElevation + defElevation * waveOffset;
+//		Debug.Log (activeSensors);
+		if (activeSensors != lastActiveSensors) {
+			position = transform.position;
+			//position.y += maxElevation * activeSensors;
+			position.y += 1f;
+			transform.position = position;
+		
+		}
 
-		transform.position = dYposition;
-
+		lastActiveSensors = activeSensors;
 
 			
 	}
 
-	float sinWave(){
-		if (testTime >= Mathf.PI*2)
-			testTime -= Mathf.PI*2 ;
-		testSin = Mathf.Sin (testTime*1)*1;
-		testTime += Time.deltaTime;
-
-		return testSin;
+	public void increaseFill()
+	
+	{
+		activeSensors+=0.2f;
 	}
 
+	public void decreaseFill(){
+		activeSensors-=0.2f;
 
+	}
+
+	void onTriggerExit(){
+		Debug.Log ("aaa");
+
+	}
 }

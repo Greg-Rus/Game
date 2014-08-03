@@ -46,13 +46,16 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\DieOnCollisionExit.cs" />
      <Compile Include="Assets\Scripts\ElevateMemCell.cs" />
      <Compile Include="Assets\Scripts\MemArrayController.cs" />
      <Compile Include="Assets\Scripts\MemCellBuffer.cs" />
      <Compile Include="Assets\Scripts\MemCellControl.cs" />
      <Compile Include="Assets\Scripts\MouseClick.cs" />
+     <Compile Include="Assets\Scripts\NewMemCellBuffer.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\SensorHitDetection.cs" />
      <Compile Include="Assets\Scripts\SimpleMove.cs" />
      <Compile Include="Assets\Scripts\SimpleRotation.cs" />
      <Compile Include="Assets\Scripts\rotationTogle.cs" />
