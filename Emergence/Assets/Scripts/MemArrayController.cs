@@ -13,6 +13,7 @@ public class MemArrayController : MonoBehaviour {
 	private Vector3 dYposition;
 	private float defElevation = 0.2f;
 	private float lastCounter;
+	public float startYposition;
 
 	// Use this for initialization
 	void Start () {
@@ -22,7 +23,7 @@ public class MemArrayController : MonoBehaviour {
 		for (i = 0; i<xSize; i++) {
 						iVector = (float)i * cellSideSize;
 		
-						spawnSpot = new Vector3 (iVector, -0.9f, 0.0f);
+			spawnSpot = new Vector3 (iVector, startYposition, 0.0f);
 
 						memIndex[i] = Instantiate (memArray, spawnSpot, Quaternion.identity) as GameObject;
 				}
@@ -34,7 +35,7 @@ public class MemArrayController : MonoBehaviour {
 		foreach (GameObject item in memIndex){
 
 			dYposition = item.transform.position;
-			dYposition.y = -0.9f + defElevation * sinWave();
+			dYposition.y = startYposition + defElevation * sinWave();
 			
 			item.transform.position = dYposition;
 			counter = counter + 1.0f;

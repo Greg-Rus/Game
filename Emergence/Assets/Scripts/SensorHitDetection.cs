@@ -6,7 +6,7 @@ public class SensorHitDetection : MonoBehaviour {
 	// Use this for initialization
 	// Use this for initialization
 	void Start () {
-		Debug.Log (" I exist");	
+
 	}
 	
 	// Update is called once per frame
@@ -16,13 +16,13 @@ public class SensorHitDetection : MonoBehaviour {
 
 	void OnTriggerEnter(){
 		memCell.increaseFill ();
-		Debug.Log ("Collision Trigger!!");
+//		Debug.Log ("Collision Trigger!!");
 	}
-//	void OnTriggerExit(){
-//		memCell.decreaseFill ();
+	void OnTriggerExit(){
+		memCell.decreaseFill ();
 //		Debug.Log ("Collision Trigger Exit!!");
 
-//	}
+	}
 
 
 }
