@@ -3,8 +3,8 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 	public float speed = 10f;
-	public float rotationSpeed = 100f;
-
+	public float rotationSpeed = 10f;
+	private Vector3 rot;
 	// Use this for initialization
 	void Start () {
 	
@@ -18,8 +18,9 @@ public class PlayerController : MonoBehaviour {
 		rotation *= Time.deltaTime;
 		transform.Translate(0, 0, translation);
 		transform.Rotate(0, rotation, 0);
-		transform.GetChild (0).rotation = Quaternion.identity;
 
+		//rigidbody.AddRelativeForce (Vector3.forward * Input.GetAxis ("Vertical") * speed);
+		//rigidbody.AddRelativeTorque (Vector3.up * Input.GetAxis ("Horizontal") * rotationSpeed);
 
 	}
 }

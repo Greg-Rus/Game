@@ -1,14 +1,14 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\MemCellSwapper.cs">
     <Files>
-      <File FileName="Assets\Scripts\ElevateMemCell.cs" Line="25" Column="3" />
-      <File FileName="Assets\Scripts\SensorHitDetection.cs" Line="29" Column="1" />
-      <File FileName="Assets\Scripts\PlayerController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PlayerController.cs" Line="15" Column="3" />
+      <File FileName="Assets\Scripts\CameraControll.cs" Line="40" Column="78" />
+      <File FileName="Assets\Scripts\ElevateMemCell.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\SensorHitDetection.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\MemArrayController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\MemCellSwapper.cs" Line="88" Column="3" />
-      <File FileName="Assets\Scripts\ObjectPool.cs" Line="16" Column="21" />
-      <File FileName="Assets\Scripts\PoolTest.cs" Line="27" Column="3" />
+      <File FileName="Assets\Scripts\MemCellSwapper.cs" Line="29" Column="3" />
+      <File FileName="Assets\Scripts\ObjectPool.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
