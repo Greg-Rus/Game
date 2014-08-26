@@ -123,7 +123,7 @@ public class MemCellSwapper : MonoBehaviour {
 	}
 
 	void OnTriggerExit(Collider other){
-
+		other.GetComponent<ElevateMemCell>().reset();
 		memCellPool.storeObject (other.gameObject);
 
 	}
