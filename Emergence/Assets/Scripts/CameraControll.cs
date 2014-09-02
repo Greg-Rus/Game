@@ -10,54 +10,48 @@ public class CameraControll : MonoBehaviour {
 	Transform test;
 	float eulerX;
 	float eulerY;
+	float eulerZ;
+	Vector3 newRotation;
 	
 	void Start() {
 		//offset = target.transform.position - transform.position;
+		eulerY = 0f;
+		eulerX = 0f;
 	}
 	
 	void LateUpdate() {
-/*		float horizontal = Input.GetAxis("Mouse X") * rotateSpeed;
-		float vertical = Input.GetAxis("Mouse Y") * rotateSpeed;
-		target.transform.Rotate(0, horizontal, 0);
+
+
+		eulerY -= Input.GetAxis("Mouse Y") * rotateSpeed * Time.deltaTime;
+		eulerY = Mathf.Clamp(eulerY, -80, 80);
+		eulerX += Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime;
+		eulerX = eulerX % 360;
+		transform.localEulerAngles = new Vector3(eulerY, eulerX, 0);
+
+
+
 	
-		
-		float desiredAngle = target.transform.eulerAngles.y;
-
-		Quaternion rotation = Quaternion.Euler (0, desiredAngle, 0);
-
-
-
-		transform.position = target.transform.position - ( rotation * offset);
-		transform.RotateAround (target.transform.position, Vector3.right ,vertical);
-		
-		transform.LookAt(target.transform);
-*/
-	
-		eulerX = transform.eulerAngles.x;
-		eulerY = transform.eulerAngles.y;
-
+//		newRotation = transform.localEulerAngles;
+/*		eulerZ = transform.rotation.z;
 		float horizontal = Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime;
 		float vertical = Input.GetAxis("Mouse Y") * rotateSpeed*-1 * Time.deltaTime;
+		newRotation = new Vector3 (vertical, horizontal, 0f);
 
-		eulerX += vertical;
-		eulerY += horizontal;
-
-		Quaternion newRotation = Quaternion.Euler (eulerX, eulerY, 0);
-		transform.rotation = newRotation;
-
-		target.transform.Rotate(0, horizontal, 0);
-		//transform.Rotate (vertical*-1f, 0, 0);
-		//transform.Rotate (0, horizontal, 0);
+*/
 
 
-	
 
-		//transform.RotateAround (target.transform.position, Vector3.right ,vertical);
-		//transform.RotateAround (target.transform.position, Vector3.up ,horizontal);
 
-		//transform.LookAt(target.transform);
 
-		//transform.position = target.transform.position - offset;
+//		newRotation.x += vertical;
+//		newRotation.y += horizontal;
+
+//		Quaternion newRotationQuaternion = Quaternion.Euler (newRotation);
+		//transform.rotation = newRotationQuaternion;
+
+//		target.transform.Rotate(0, horizontal, 0);
+		target.transform.localEulerAngles = new Vector3 (0f, eulerX, 0f);
+
 
 	}
 }
