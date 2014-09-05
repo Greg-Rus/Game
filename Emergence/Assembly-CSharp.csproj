@@ -64,6 +64,7 @@
      <Compile Include="Assets\Scripts\SensorHitDetection.cs" />
      <Compile Include="Assets\Scripts\SimpleMove.cs" />
      <Compile Include="Assets\Scripts\SimpleRotation.cs" />
+     <Compile Include="Assets\Scripts\WheelController.cs" />
      <Compile Include="Assets\Scripts\rotationTogle.cs" />
      <None Include="Assets\Standard Assets\Projectors\Guidelines.txt" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Basic.shader" />
