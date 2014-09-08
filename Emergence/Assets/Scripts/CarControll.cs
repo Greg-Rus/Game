@@ -29,6 +29,8 @@ public class CarControll : MonoBehaviour {
 	private bool isBraking;
 	public float currentSpeed;
 	private float deltaTime;
+	private float wheelAngleFR;
+	private float wheelAngleFL;
 
 
 	// Use this for initialization
@@ -38,6 +40,8 @@ public class CarControll : MonoBehaviour {
 		fixedCenterOfMass.y = -0.7f;
 		rigidbody.centerOfMass = fixedCenterOfMass;
 		lastSteerAngle = currentSteerAngle;
+		wheelAngleFR = wheelTransformFR.localEulerAngles.x;
+		wheelAngleFL = wheelTransformFL.localEulerAngles.x;
 	}
 	
 	// Update is called once per frame
@@ -73,7 +77,9 @@ public class CarControll : MonoBehaviour {
 
 	void ApplyTorqueToWheels(){
 	
-		if (((currentSpeed> 0) && (Input.GetAxis("Vertical") <0 )) || ((currentSpeed< 0) && (Input.GetAxis("Vertical") > 0 ))){
+		if (((currentSpeed> 0) && (Input.GetAxis("Vertical") <0 )) ||
+		    ((currentSpeed< 0) && (Input.GetAxis("Vertical") > 0 )) ||
+		    ((Mathf.Abs ( currentSpeed ) < 5) && Input.GetAxis ("Vertical") == 0)){
 			isBraking = true;
 		}
 		else {
@@ -134,17 +140,19 @@ public class CarControll : MonoBehaviour {
 //		wheelTransformFL.RotateAround (wheelFL.transform.position, Vector3.up, deltaOfSteerAngle );
 //		wheelTransformFR.RotateAround (wheelFR.transform.position, Vector3.up, deltaOfSteerAngle );
 		deltaTime = Time.fixedDeltaTime;
+		wheelAngleFL=Mathf.Repeat (wheelAngleFL + deltaTime * wheelFL.rpm * 6f, 360.0f);
+
+		wheelAngleFR=Mathf.Repeat (wheelAngleFR + deltaTime * wheelFR.rpm * 6f, 360.0f);
 
 		wheelTransformFL.localRotation = Quaternion.Euler (
-
-			Mathf.Repeat (wheelTransformFL.localRotation.eulerAngles.x + deltaTime * wheelFL.rpm * 6f, 360.0f),
+			wheelAngleFL,
 			wheelFL.steerAngle,
 			0f);
-		Debug.Log (Mathf.Repeat (wheelTransformFL.localRotation.eulerAngles.x + deltaTime * wheelFL.rpm * 6f, 360.0f));
+//		Debug.Log (Mathf.Repeat (wheelTransformFL.localRotation.eulerAngles.x + deltaTime * wheelFL.rpm * 6f, 360.0f));
 		wheelTransformFR.localRotation = Quaternion.Euler (
-			Mathf.Repeat (wheelTransformFR.localRotation.eulerAngles.x + deltaTime * wheelFR.rpm * 6f, 360.0f),
+			wheelAngleFR,
 			wheelFR.steerAngle,
-			wheelTransformFL.localRotation.eulerAngles.z);
+			0f);
 //		lastSteerAngle = currentSteerAngle;
 
 	}
