@@ -1,11 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CarControll.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CyberspacePlayerController.cs">
     <Files>
-      <File FileName="Assets\Scripts\CarControll.cs" Line="155" Column="6" />
-      <File FileName="Assets\Scripts\WheelController.cs" Line="22" Column="30" />
+      <File FileName="Assets\Scripts\LockRotation.cs" Line="22" Column="3" />
       <File FileName="Assets\Scripts\CameraControll.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\PlayerController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\CyberspacePlayerController.cs" Line="16" Column="29" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
