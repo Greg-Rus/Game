@@ -5,7 +5,9 @@ public class MemCellSwapper : MonoBehaviour {
 	public GameObject memCell;
 	
 	public float bufferSquareSize;
-	public int objectPoolSize;
+	//public int objectPoolSize;
+	private ObjectPool memCellPool;
+	public MemCellPoolCreator pool;
 	float curX;
 	float curZ;
 	float lBound;
@@ -16,15 +18,21 @@ public class MemCellSwapper : MonoBehaviour {
 	Vector3 position;
 	Vector3 spawnSpot;
 	enum direction {left, right, up, down};
-	public ObjectPool memCellPool;
 
+	void Awake(){
+		memCellPool = pool.thePool;
 
 	
+	}
+
 	
+
 	// Use this for initialization
 	void Start () {
+		Debug.Log ("Starting");
+		//memCellPool = *pool.getPoolRef ();
 
-		memCellPool = new ObjectPool (memCell, objectPoolSize);
+		//memCellPool = new ObjectPool (memCell, objectPoolSize);
 
 
 		ySpawnPosition = memCell.transform.localScale.y * -0.5f;

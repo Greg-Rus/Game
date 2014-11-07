@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
 public class ObjectPool {
 
 	private GameObject type;
@@ -9,11 +10,13 @@ public class ObjectPool {
 //	private GameObject[] activePool; 
 	private GameObject[] inactivePool;
 //	private int activeCounter;
-	private int inactiveCounter;
+	private int nextInactiveObject;
+	private int expandAmount;
 
-	public ObjectPool(GameObject objectType, int number){
+	public ObjectPool(GameObject objectType, int number, int expand = 10){
 		type = objectType;
 		quantity = number;
+		expandAmount = expand;
 		inactivePool = new GameObject[quantity];
 
 		for (int i = 0; i < quantity; i++) {
@@ -23,16 +26,20 @@ public class ObjectPool {
 			inactivePool[i] = newObject;
 
 		}
-		inactiveCounter = quantity-1;
+		nextInactiveObject = 0;
 
 	}
 
 	public GameObject retrieveObject()
 	{
 
-		inactivePool [inactiveCounter].SetActive(true);
-		GameObject topInactiveObj = inactivePool [inactiveCounter];
-		inactiveCounter--;
+		inactivePool [nextInactiveObject].SetActive(true);
+		GameObject topInactiveObj = inactivePool [nextInactiveObject];
+		if (nextInactiveObject == quantity - 1) {
+			expandPool();
+			nextInactiveObject++;
+		}
+		else nextInactiveObject++;
 
 		return topInactiveObj;
 
@@ -41,9 +48,22 @@ public class ObjectPool {
 	public void storeObject(GameObject removedObject)
 	{
 
-		inactiveCounter++;
-		inactivePool [inactiveCounter] = removedObject;
-		inactivePool [inactiveCounter].SetActive(false);
+		nextInactiveObject--;
+		inactivePool [nextInactiveObject] = removedObject;
+		inactivePool [nextInactiveObject].SetActive(false);
+
+	}
+
+	public void expandPool(){
+		System.Array.Resize<GameObject> (ref inactivePool, quantity + expandAmount);
+		for (int i =quantity; i< quantity+expandAmount; i++) {
+			GameObject newObject = GameObject.Instantiate(type, new Vector3(0,0,0), Quaternion.identity) as GameObject;
+			newObject.SetActive(false);
+			inactivePool[i] = newObject;
+		}
+		quantity = quantity + expandAmount;
+		Debug.Log ("Pool Expanded");
+
 
 	}
 

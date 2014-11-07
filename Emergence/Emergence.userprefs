@@ -1,10 +1,16 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\CyberspacePlayerController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\ObjectPool.cs">
     <Files>
-      <File FileName="Assets\Scripts\LockRotation.cs" Line="22" Column="3" />
+      <File FileName="Assets\Scripts\ObjectPool.cs" Line="40" Column="18" />
+      <File FileName="Assets\Scripts\Cyberspace Scripts\PulsingPlayerLight.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\AI Scripts\CyberspaceAIController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\LockRotation.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\CameraControll.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\CyberspacePlayerController.cs" Line="16" Column="29" />
+      <File FileName="Assets\Scripts\CyberspacePlayerController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\CyberCameraControll.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Cyberspace Scripts\MemCellSwapper.cs" Line="23" Column="30" />
+      <File FileName="Assets\Scripts\Cyberspace Scripts\MemCellPoolCreator.cs" Line="11" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

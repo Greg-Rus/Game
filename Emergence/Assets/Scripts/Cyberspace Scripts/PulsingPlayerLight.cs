@@ -9,15 +9,24 @@ public class PulsingPlayerLight : MonoBehaviour {
 	private Vector3 lightPosition;
 	private Vector3 newLightPosition;
 	private Vector3 moveDirection;
+	private float lightIntensity;
+	private float dimmer = 1;
 	// Use this for initialization
 	void Start () {
 //		lightPosition = transform.position;
-		moveDirection = Vector3.up;
+//		moveDirection = Vector3.up;
+		lightIntensity = actorLight.intensity;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (transform.position.y >= maxUp) {
+		if (lightIntensity >= maxUp || lightIntensity <= maxDown) {
+			dimmer = dimmer * -1f;
+		}
+		lightIntensity = lightIntensity + (pulseFrequency * Time.deltaTime) * dimmer;
+		actorLight.intensity = lightIntensity;
+
+/*		if (transform.position.y >= maxUp) {
 			moveDirection = Vector3.down;
 				}
 
@@ -27,5 +36,6 @@ public class PulsingPlayerLight : MonoBehaviour {
 		newLightPosition = transform.position;
 		newLightPosition += moveDirection * pulseFrequency * Time.deltaTime;
 		transform.position = newLightPosition;
+*/
 	}
 }
