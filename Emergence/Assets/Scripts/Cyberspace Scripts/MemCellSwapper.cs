@@ -20,7 +20,7 @@ public class MemCellSwapper : MonoBehaviour {
 	enum direction {left, right, up, down};
 
 	void Awake(){
-		memCellPool = pool.thePool;
+
 
 	
 	}
@@ -29,7 +29,10 @@ public class MemCellSwapper : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Debug.Log ("Starting");
+
+		//Debug.Log ("Starting");
+		memCellPool = pool.thePool;
+		Debug.Log ("Pool refernce set");
 		//memCellPool = *pool.getPoolRef ();
 
 		//memCellPool = new ObjectPool (memCell, objectPoolSize);
