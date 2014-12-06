@@ -4,6 +4,7 @@ using System.Collections;
 
 public class CameraControll : MonoBehaviour {
 	public GameObject target;
+	public Transform barrel;
 	public float rotateSpeed = 5;
 	Vector3 offset;
 	Vector3 xRot;
@@ -12,6 +13,8 @@ public class CameraControll : MonoBehaviour {
 	float eulerY;
 	float eulerZ;
 	Vector3 newRotation;
+	float barrelEulerX;
+	float barrelOffset =0f;
 	
 	void Start() {
 		//offset = target.transform.position - transform.position;
@@ -23,10 +26,17 @@ public class CameraControll : MonoBehaviour {
 
 
 		eulerY -= Input.GetAxis("Mouse Y") * rotateSpeed * Time.deltaTime;
-		eulerY = Mathf.Clamp(eulerY, -80, 80);
+		eulerY = Mathf.Clamp(eulerY, -80f, 80f);
 		eulerX += Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime;
 		eulerX = eulerX % 360;
 		transform.localEulerAngles = new Vector3(eulerY, eulerX, 0);
+
+		if (Input.GetAxis ("Mouse ScrollWheel") > 0) {
+			barrelOffset +=5f;		
+		}
+		if (Input.GetAxis ("Mouse ScrollWheel") < 0) {
+			barrelOffset -=5f;		
+		}
 
 
 
@@ -50,7 +60,11 @@ public class CameraControll : MonoBehaviour {
 		//transform.rotation = newRotationQuaternion;
 
 //		target.transform.Rotate(0, horizontal, 0);
-		target.transform.localEulerAngles = new Vector3 (0f, eulerX, 0f);
+		barrelEulerX = (Mathf.Clamp (eulerY + barrelOffset, -90f, 0f)) ;
+		barrel.localEulerAngles = new Vector3 (barrelEulerX, 0f, 0f);
+
+
+		target.transform.localEulerAngles = new Vector3 (0f, eulerX , 0f);
 
 
 	}

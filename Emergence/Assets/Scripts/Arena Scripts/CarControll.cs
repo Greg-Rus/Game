@@ -9,6 +9,7 @@ public class CarControll : MonoBehaviour {
 	public WheelCollider wheelML;
 	public WheelCollider wheelBL;
 	public Transform wheelParent;
+	public WheelCollider[] wheelColliders;
 
 	public Transform wheelTransformFR;
 	public Transform wheelTransformMR;
@@ -16,6 +17,7 @@ public class CarControll : MonoBehaviour {
 	public Transform wheelTransformFL;
 	public Transform wheelTransformML;
 	public Transform wheelTransformBL;
+
 
 	public float maxTorque = 20;
 	public float maxSteerAngle = 10;
@@ -31,14 +33,65 @@ public class CarControll : MonoBehaviour {
 	private float deltaTime;
 	private float wheelAngleFR;
 	private float wheelAngleFL;
+/*
 	public float slideFactor = 25000;
+	public float SF_extremum_slip;
+	public float SF_extremum_value;
+	public float SF_asymptote_slip;
+	public float SF_asymptote_value;
+	public float SF_stiffness;
+
+	public float FF_extremum_slip;
+	public float FF_extremum_value;
+	public float FF_asymptote_slip;
+	public float FF_asymptote_value;
+	public float FF_stiffness;
+
+	public float SS_spring;
+	public float SS_damper;
+	public float SS_targetPosition;
+
+	public float Spring;
+	public float Damper;
+	public float Target_Position;
+*/
 
 
 	// Use this for initialization
+/*	void Awake()
+	{
+		WheelCollider[] wheelColliders  = {wheelFR, wheelMR, wheelBR, wheelFL, wheelML, wheelBL} ;
+		foreach (WheelCollider wheel in wheelColliders) {
+			WheelFrictionCurve newFrictionCurve = wheel.sidewaysFriction;
+			newFrictionCurve.asymptoteSlip = SF_asymptote_slip;
+			newFrictionCurve.asymptoteValue = SF_asymptote_value;
+			newFrictionCurve.extremumSlip = SF_extremum_slip;
+			newFrictionCurve.extremumValue = SF_extremum_value;
+			newFrictionCurve.stiffness = SF_stiffness;
+			wheel.sidewaysFriction = newFrictionCurve;
+
+			newFrictionCurve = wheel.forwardFriction;
+
+			newFrictionCurve.asymptoteSlip = FF_asymptote_slip;
+			newFrictionCurve.asymptoteValue = FF_asymptote_value;
+			newFrictionCurve.extremumSlip = FF_extremum_slip;
+			newFrictionCurve.extremumValue = FF_extremum_value;
+			newFrictionCurve.stiffness = FF_stiffness;
+
+			wheel.forwardFriction = newFrictionCurve;
+
+			JointSpring newSuspensionSpring = wheel.suspensionSpring;
+			newSuspensionSpring.spring = SS_spring;
+			newSuspensionSpring.damper = SS_damper;
+			newSuspensionSpring.targetPosition = SS_targetPosition;
+			wheel.suspensionSpring = newSuspensionSpring;
+		}
+	}
+*/
 	void Start () {
 		isBraking = false;
 		fixedCenterOfMass = rigidbody.centerOfMass;
-		fixedCenterOfMass.y = -0.7f;
+		fixedCenterOfMass.y = -0.5f;
 		rigidbody.centerOfMass = fixedCenterOfMass;
 		lastSteerAngle = currentSteerAngle;
 		wheelAngleFR = wheelTransformFR.localEulerAngles.x;
@@ -52,7 +105,7 @@ public class CarControll : MonoBehaviour {
 		currentSteerAngle = maxSteerAngle * Input.GetAxis ("Horizontal");
 		ApplyTorqueToWheels ();
 		ApplySteeringAngleToWheels ();
-		UpdateSlip ();
+		//UpdateSlip ();
 
 
 
