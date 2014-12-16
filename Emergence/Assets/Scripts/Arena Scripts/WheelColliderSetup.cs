@@ -24,7 +24,11 @@ public class WheelColliderSetup : MonoBehaviour {
 	public float SF_asymptote_value;
 	public float SF_stiffness;
 
+	public float handbrake_stiffness;
 
+	WheelFrictionCurve newFrictionCurve;
+	WheelFrictionCurve preHandBrakeFF;
+	WheelFrictionCurve preHandBrakeSF;
 
 	
 
@@ -36,7 +40,7 @@ public class WheelColliderSetup : MonoBehaviour {
 			wheel.suspensionDistance = Suspension_Distance;
 			wheel.radius = Radius;
 
-			WheelFrictionCurve newFrictionCurve = wheel.sidewaysFriction;
+			newFrictionCurve = wheel.sidewaysFriction;
 
 			newFrictionCurve.asymptoteSlip = SF_asymptote_slip;
 			newFrictionCurve.asymptoteValue = SF_asymptote_value;
@@ -60,5 +64,36 @@ public class WheelColliderSetup : MonoBehaviour {
 			newSuspensionSpring.targetPosition = SS_targetPosition;
 			wheel.suspensionSpring = newSuspensionSpring;
 		}
+	}
+	void Update(){
+		if (Input.GetButtonDown ("Jump") == true) {
+		
+			for ( int i = 2; i < 6; i++){
+				preHandBrakeFF = wheelColliders[i].forwardFriction;
+				newFrictionCurve = wheelColliders[i].forwardFriction;
+				newFrictionCurve.stiffness = handbrake_stiffness;
+				wheelColliders[i].forwardFriction = newFrictionCurve;
+
+				preHandBrakeSF = wheelColliders[i].sidewaysFriction;
+				newFrictionCurve = wheelColliders[i].sidewaysFriction;
+				newFrictionCurve.stiffness = handbrake_stiffness;
+				wheelColliders[i].sidewaysFriction = newFrictionCurve;
+
+				wheelColliders[i].brakeTorque = 50000;
+			}
+		
+		}
+		if (Input.GetButtonUp ("Jump") == true) {
+		
+			for ( int i = 2; i < 6; i++){
+
+				wheelColliders[i].sidewaysFriction = preHandBrakeSF;
+				wheelColliders[i].brakeTorque = 0;
+				wheelColliders[i].forwardFriction = preHandBrakeFF;
+
+			}
+		}
+
+
 	}
 }

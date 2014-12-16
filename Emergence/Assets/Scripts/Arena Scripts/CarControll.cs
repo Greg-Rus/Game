@@ -23,75 +23,27 @@ public class CarControll : MonoBehaviour {
 	public float maxSteerAngle = 10;
 	public float maxBrakeTorque = 50;
 	public float maxSpeed = 50;
+	public float centerOfMassOffset;
+	public float currentSpeed;
+
+
 	private float currentTorque;
 	private float currentSteerAngle;
 	private float lastSteerAngle;
 	private float deltaOfSteerAngle;
 	private Vector3 fixedCenterOfMass;
 	private bool isBraking;
-	public float currentSpeed;
+
 	private float deltaTime;
 	private float wheelAngleFR;
 	private float wheelAngleFL;
-/*
-	public float slideFactor = 25000;
-	public float SF_extremum_slip;
-	public float SF_extremum_value;
-	public float SF_asymptote_slip;
-	public float SF_asymptote_value;
-	public float SF_stiffness;
+	private float wheelAngleML;
+	private float wheelAngleMR;
 
-	public float FF_extremum_slip;
-	public float FF_extremum_value;
-	public float FF_asymptote_slip;
-	public float FF_asymptote_value;
-	public float FF_stiffness;
-
-	public float SS_spring;
-	public float SS_damper;
-	public float SS_targetPosition;
-
-	public float Spring;
-	public float Damper;
-	public float Target_Position;
-*/
-
-
-	// Use this for initialization
-/*	void Awake()
-	{
-		WheelCollider[] wheelColliders  = {wheelFR, wheelMR, wheelBR, wheelFL, wheelML, wheelBL} ;
-		foreach (WheelCollider wheel in wheelColliders) {
-			WheelFrictionCurve newFrictionCurve = wheel.sidewaysFriction;
-			newFrictionCurve.asymptoteSlip = SF_asymptote_slip;
-			newFrictionCurve.asymptoteValue = SF_asymptote_value;
-			newFrictionCurve.extremumSlip = SF_extremum_slip;
-			newFrictionCurve.extremumValue = SF_extremum_value;
-			newFrictionCurve.stiffness = SF_stiffness;
-			wheel.sidewaysFriction = newFrictionCurve;
-
-			newFrictionCurve = wheel.forwardFriction;
-
-			newFrictionCurve.asymptoteSlip = FF_asymptote_slip;
-			newFrictionCurve.asymptoteValue = FF_asymptote_value;
-			newFrictionCurve.extremumSlip = FF_extremum_slip;
-			newFrictionCurve.extremumValue = FF_extremum_value;
-			newFrictionCurve.stiffness = FF_stiffness;
-
-			wheel.forwardFriction = newFrictionCurve;
-
-			JointSpring newSuspensionSpring = wheel.suspensionSpring;
-			newSuspensionSpring.spring = SS_spring;
-			newSuspensionSpring.damper = SS_damper;
-			newSuspensionSpring.targetPosition = SS_targetPosition;
-			wheel.suspensionSpring = newSuspensionSpring;
-		}
-	}
-*/
 	void Start () {
 		isBraking = false;
 		fixedCenterOfMass = rigidbody.centerOfMass;
-		fixedCenterOfMass.y = -0.5f;
+		fixedCenterOfMass.y = centerOfMassOffset;
 		rigidbody.centerOfMass = fixedCenterOfMass;
 		lastSteerAngle = currentSteerAngle;
 		wheelAngleFR = wheelTransformFR.localEulerAngles.x;
@@ -115,18 +67,6 @@ public class CarControll : MonoBehaviour {
 
 		RotateWheels ();
 		TurnSteeringWheels ();
-
-
-//		lastSteerAngle = lastSteerAngle - currentSteerAngle;
-//		float FL = wheelFL.steerAngle - wheelTransformFL.localEulerAngles.z;
-//		float FR = wheelFR.steerAngle - wheelTransformFR.localEulerAngles.z;
-//		wheelTransformFL.localEulerAngles = new Vector3 (wheelTransformFL.localEulerAngles.x - wheelTransformFL.localEulerAngles.z, wheelFL.steerAngle, wheelTransformFL.localEulerAngles.z);
-//		wheelTransformFR.localEulerAngles = new Vector3 (wheelTransformFR.localEulerAngles.x - wheelTransformFR.localEulerAngles.z, wheelFR.steerAngle, wheelTransformFR.localEulerAngles.z);
-//		wheelTransformFL.Rotate (0, lastSteerAngle - currentSteerAngle, 0);
-//		wheelTransformFR.Rotate (0, lastSteerAngle - currentSteerAngle, 0);
-//		WheelSuspensionUpdate ();
-
-
 
 	}
 
@@ -173,42 +113,48 @@ public class CarControll : MonoBehaviour {
 	void ApplySteeringAngleToWheels (){
 		wheelFR.steerAngle = currentSteerAngle;
 		wheelFL.steerAngle = currentSteerAngle;
-
+		wheelML.steerAngle = currentSteerAngle * 0.5f;
+		wheelMR.steerAngle = currentSteerAngle * 0.5f;
 	}
 
 	void RotateWheels(){
 		float deltaTime = Time.fixedDeltaTime;
-
-//		wheelTransformFR.Rotate (wheelFR.rpm * 6f *deltaTime, 0, 0);
-//		wheelTransformFL.Rotate (wheelFL.rpm * 6f *deltaTime, 0, 0);
 		
-		wheelTransformMR.Rotate (wheelMR.rpm * 6f *deltaTime, 0, 0);
+		//wheelTransformMR.Rotate (wheelMR.rpm * 6f *deltaTime, 0, 0);
 		wheelTransformBR.Rotate (wheelBR.rpm * 6f *deltaTime, 0, 0);
 		
-		wheelTransformML.Rotate (wheelML.rpm * 6f *deltaTime, 0, 0);
+		//wheelTransformML.Rotate (wheelML.rpm * 6f *deltaTime, 0, 0);
 		wheelTransformBL.Rotate (wheelBL.rpm * 6f *deltaTime, 0, 0);
 	}
 
 	void TurnSteeringWheels() {
-//		deltaOfSteerAngle = currentSteerAngle - lastSteerAngle;
-		
-//		wheelTransformFL.RotateAround (wheelFL.transform.position, Vector3.up, deltaOfSteerAngle );
-//		wheelTransformFR.RotateAround (wheelFR.transform.position, Vector3.up, deltaOfSteerAngle );
+
 		deltaTime = Time.fixedDeltaTime;
 		wheelAngleFL=Mathf.Repeat (wheelAngleFL + deltaTime * wheelFL.rpm * 6f, 360.0f);
-
 		wheelAngleFR=Mathf.Repeat (wheelAngleFR + deltaTime * wheelFR.rpm * 6f, 360.0f);
+
+		wheelAngleML=Mathf.Repeat (wheelAngleML + deltaTime * wheelML.rpm * 6f, 360.0f);
+		wheelAngleMR=Mathf.Repeat (wheelAngleMR + deltaTime * wheelMR.rpm * 6f, 360.0f);
 
 		wheelTransformFL.localRotation = Quaternion.Euler (
 			wheelAngleFL,
 			wheelFL.steerAngle,
 			0f);
-//		Debug.Log (Mathf.Repeat (wheelTransformFL.localRotation.eulerAngles.x + deltaTime * wheelFL.rpm * 6f, 360.0f));
+
 		wheelTransformFR.localRotation = Quaternion.Euler (
 			wheelAngleFR,
 			wheelFR.steerAngle,
 			0f);
-//		lastSteerAngle = currentSteerAngle;
+
+		wheelTransformML.localRotation = Quaternion.Euler (
+			wheelAngleML,
+			wheelML.steerAngle,
+			0f);
+
+		wheelTransformMR.localRotation = Quaternion.Euler (
+			wheelAngleMR,
+			wheelMR.steerAngle,
+			0f);
 
 	}
 

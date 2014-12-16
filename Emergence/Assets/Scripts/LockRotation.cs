@@ -7,7 +7,7 @@ public class LockRotation : MonoBehaviour {
 	public bool lockZAxis;
 	private Vector3 rotation;
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate () {
 		rotation = transform.localEulerAngles;
 		if (lockXAxis) {
 			rotation.x = 0f;
