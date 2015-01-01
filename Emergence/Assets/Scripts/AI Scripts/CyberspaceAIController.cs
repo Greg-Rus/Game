@@ -4,11 +4,14 @@ using System.Collections;
 public class CyberspaceAIController : MonoBehaviour {
 	public Transform[] waypoints;
 
+
 	private int currentWaypoint;
 	private NavMeshAgent nav; 
+
 	// Use this for initialization
 	void Start () {
 		nav = GetComponent<NavMeshAgent> ();
+
 	}
 	void Update (){
 		patrol ();

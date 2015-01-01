@@ -43,7 +43,7 @@ public class TankTargeting : MonoBehaviour {
 		if (angle < 180f && angle > lowerMax) 
 			angle = lowerMax;
 
-		Debug.Log (angle);
+		//Debug.Log (angle);
 		return angle;
 
 	
@@ -66,8 +66,8 @@ public class TankTargeting : MonoBehaviour {
 		//Calculate vector to turret plane position (in global space)
 		toTarget = globalPlaneLocation - gunPivot.position;
 		
-		Debug.DrawRay (gunPivot.position, gunPivot.forward *5f, Color.red);
-		Debug.DrawLine (gunPivot.position, globalPlaneLocation , Color.blue);
+		//Debug.DrawRay (gunPivot.position, gunPivot.forward *5f, Color.red);
+		//Debug.DrawLine (gunPivot.position, globalPlaneLocation , Color.blue);
 		
 		//Calculate the angle between current forward vector and turret plane target position
 		angleDelta = Vector3.Angle (gunPivot.forward, toTarget);
