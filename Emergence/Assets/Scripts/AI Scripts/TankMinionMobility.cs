@@ -10,8 +10,11 @@ public class TankMinionMobility : MonoBehaviour {
 	private NavMeshAgent nav;
 	private float distanceToGround;
 	private Vector3 fixedCenterOfMass;
+	private bool mustYealdToPhysics;
+
 	public bool isNavControlled;
 	public bool isBeingAffectedByPhysiscs;
+	public bool isGrounded;
 	public float distanceToTarget;
 	public float magnitudeToTarget;
 	public float rigidbodyVelocity;
@@ -23,6 +26,7 @@ public class TankMinionMobility : MonoBehaviour {
 	void Start () {
 		nav = GetComponent<NavMeshAgent> ();
 		isNavControlled = true;
+		//FindDistanceToGround ();
 		distanceToGround = collider.bounds.extents.y;
 
 		fixedCenterOfMass = rigidbody.centerOfMass;
@@ -31,89 +35,103 @@ public class TankMinionMobility : MonoBehaviour {
 
 		nav.updatePosition = true;
 		nav.updateRotation = true;
+		usePhysics ();
 
+
+	}
+	void FixedUpdate(){
+
+
+		IsGrounded ();
 
 	}
 	void Update (){
 
 		rigidbodyVelocity = rigidbody.velocity.magnitude;
-		isAffectedByPhysics ();
-		Debug.Log ("Grounded is " + IsGrounded());
+		patrol ();
+
 
 	}
 	void LateUpdate(){
-		moveTracks ();
-		patrol ();
+		isAffectedByPhysics ();
+		StartCoroutine(moveTracks ());
 
-		}
+	}
+
+
 	//Toggles the navAgents kinematic controlls.
-	void moveTracks(){
-		if ((!IsGrounded ()  || isAffectedByPhysics()) && isNavControlled )
-		{
-			usePhysics();			 
-		}
+	IEnumerator moveTracks(){
+		if (mustYealdToPhysics) {
+			mustYealdToPhysics = false;
+			yield return new WaitForFixedUpdate();
+				}
+		//if ((!IsGrounded ()  || isAffectedByPhysics()) && isNavControlled )
+		//{
+		//	usePhysics();			 
+		//}
 
-		if (IsGrounded () && !isAffectedByPhysics() &&  !isNavControlled)
+		//if (IsGrounded () && !isAffectedByPhysics() &&  !isNavControlled)
+		//{
+		//	useNavAgent();
+		//}
+		if (!isAffectedByPhysics () && !isNavControlled) 
 		{
 			useNavAgent();
 		}
-				
 
 	}
-	// Update is called once per frame
+
 	bool isAffectedByPhysics()
 	{
-		//Debug.Log (rigidbody.velocity.magnitude);
 		return isBeingAffectedByPhysiscs = rigidbody.velocity.magnitude > 0 ? true : false;
 	}
-	/*
-	void OnCollisionEnter(Collision hit)
+
+	void OnCollisionEnter(Collision col)
 	{
-		foreach (ContactPoint contact in hit.contacts){
-			if (contact.otherCollider.name != "Terrain"){
-			print("This collider collided with: " + contact.otherCollider.name);
+		foreach (ContactPoint hit in col.contacts) {
+			if (hit.otherCollider.name == "Mako"){
+				print("This collider collided with: " + hit.otherCollider.name);
 				usePhysics();
-			}
-		} 
-
-	}
-	*/
-	void OnTriggerEnter(Collider hit)
-	{
-
-		if (hit.name != "Terrain"){
-			print("This collider collided with: " + hit.name);
-			usePhysics();
+			}	
 		}
+
 		 
 		
 	}
 
 	bool IsGrounded()
 	{
-		return Physics.Raycast(transform.position, -transform.up, distanceToGround + 0.1f);
-
+		return isGrounded = Physics.Raycast(transform.position, -transform.up, distanceToGround);
+		
 	}
 
-	private void usePhysics()
-	{
-		isNavControlled = false;
-		rigidbody.isKinematic = false; 
-		rigidbody.useGravity = true; 
-		nav.enabled=false;
-		Debug.Log ("Physics!");
+	public void usePhysics()
+	{	
+		if (!isAffectedByPhysics ()) 
+		{
+			isNavControlled = false;
+			rigidbody.isKinematic = false; 
+			rigidbody.useGravity = true; 
+			nav.enabled=false;
+			mustYealdToPhysics = true;
+			Debug.Log ("Switched to Physics!");
+		}
+	
 	}
 	private void useNavAgent()
 	{
-		isNavControlled = true;
-		rigidbody.isKinematic = true; 
-		rigidbody.useGravity = false; 
-		nav.enabled=true;
-		nav.ResetPath ();
-		nav.destination = waypoints[currentWaypoint].position;
+		if (!isNavControlled) 
+		{
+			isNavControlled = true;
+			rigidbody.isKinematic = true; 
+			rigidbody.useGravity = false; 
+			nav.enabled=true;
+			nav.ResetPath ();
+			nav.destination = waypoints[currentWaypoint].position;
+			//nav.Resume ();
+			Debug.Log ("Switched to NavAgent!");	
+		}
 
-		//nav.Resume ();
-		Debug.Log ("NavAgent!");
 	}
 
 	void patrol(){

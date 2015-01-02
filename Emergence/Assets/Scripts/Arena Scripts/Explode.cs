@@ -1,36 +1,44 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Explode : MonoBehaviour {
 	public GameObject explosion;
-	public GameObject marker;
-	// Use this for initialization
+	public float explosionPower;
+	public float explosionRadius;
 
-	// Update is called once per frame
+	private TankMinionMobility script;
+
+
 	void OnCollisionEnter(Collision hit){
-		//Debug.Log ("HIT and rigidbody is: " + hit.rigidbody.isKinematic);
-		Debug.Log (hit.collider.name);
+		Debug.Log ("Projectile has directly hit: " + hit.collider.name);
 		GameObject expl = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
-		//GameObject mark = Instantiate(marker, transform.position, Quaternion.identity) as GameObject;
-		if (hit.rigidbody && hit.rigidbody.name != "Mako") {
-			if (hit.rigidbody.isKinematic)
+		Collider[] collidersInRange = Physics.OverlapSphere (transform.position, explosionRadius);
+
+		foreach (Collider col in collidersInRange)
+		{
+			Debug.Log (col.name + " caught in explosion");
+			if (col.rigidbody)
+
 			{
-				Debug.Log ("Projectile hit but object is kinematic");
-
-					//hit.rigidbody.isKinematic = false; 
-					//hit.rigidbody.useGravity = true; 
-
-
-			}
-			hit.rigidbody.AddExplosionForce (50000f, transform.position, 5f, 1f, ForceMode.Impulse);
+				if(col.rigidbody.isKinematic)
+				{
+					Debug.Log (col.rigidbody.name + " has a Kinematic Rigidbody");
+					if(script = col.rigidbody.GetComponent("TankMinionMobility") as TankMinionMobility) {
+						Debug.Log (col.rigidbody.name + " has the TankMinionMobility script.");
+						script.usePhysics();
+						Debug.Log ("Forced Physics from explosion.");
+					}
+					script = null;
 				}
+				col.rigidbody.AddExplosionForce (explosionPower,
+				                                 transform.position,
+				                                 explosionRadius,
+				                                 1f,
+				                                 ForceMode.Impulse);
+				Debug.Log ("Explosion force applied.");
+			}
+		}
 		Destroy(gameObject); // destroy the grenade
 		Destroy(expl, 3); // delete the explosion after 3 seconds
 	}
-	//	void OnTriggerEnter(Collider hit){
-//		Debug.Log ("HIT");
-
-//	}
-
-
 }
