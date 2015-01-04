@@ -42,7 +42,7 @@ public class TankMinionMobility : MonoBehaviour {
 	void FixedUpdate(){
 
 
-		IsGrounded ();
+		//IsGrounded ();
 
 	}
 	void Update (){
@@ -74,7 +74,7 @@ public class TankMinionMobility : MonoBehaviour {
 		//{
 		//	useNavAgent();
 		//}
-		if (!isAffectedByPhysics () && !isNavControlled) 
+		if (IsGrounded() && !isAffectedByPhysics () && !isNavControlled) 
 		{
 			useNavAgent();
 		}

@@ -12,10 +12,14 @@ public class TankMinionPerception : MonoBehaviour {
 	//The Scanner can then report the findings to the AI core. 
 	Vector3 vectorToPoI; 
 	float angleToPoI;
+	public bool detectedByProximitySense;
+	bool detectedByLongScan;
 	// Use this for initialization
 
 	void Start () {
-	
+		detectedByProximitySense = false;
+		detectedByLongScan = false;
+
 	}
 	
 	// Update is called once per frame
@@ -24,9 +28,16 @@ public class TankMinionPerception : MonoBehaviour {
 	}
 
 	//Spere Sensor. Place this on an sensor object equipped with a trigger sphere collider
-	void onTriggerEnter(){
-
-
+	void OnTriggerEnter(Collider other){
+		Debug.Log (other.name);
+		if (other.name == PoI.name) {
+			detectedByProximitySense = true;		
+		}
+	}
+	void OnTriggerExit(Collider other){
+		if (other.name == PoI.name) {
+			detectedByProximitySense = false;		
+		}
 	}
 
 	public bool scannVisionRange(){
@@ -35,11 +46,11 @@ public class TankMinionPerception : MonoBehaviour {
 		angleToPoI = Vector3.Angle (vectorToPoI, transform.forward);
 		if (angleToPoI <= visionAngle) {
 			RaycastHit hit;
-			if (Physics.Raycast (transform.position, vectorToPoI, out hit, visionRange)) {
-				Debug.Log ("Player in sight");
-				return true;
-			}
-
+			detectedByLongScan = Physics.Raycast (transform.position, vectorToPoI, out hit, visionRange);
+		}
+		if (detectedByLongScan || detectedByProximitySense) {
+			Debug.Log ("Player in sight");
+			return true;
 		}
 		return false;
 						
