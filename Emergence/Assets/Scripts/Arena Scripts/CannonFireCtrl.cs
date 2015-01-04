@@ -11,6 +11,8 @@ public class CannonFireCtrl : MonoBehaviour {
 
 	float shotDelta;
 	float shotCharge = 0f;
+
+
 	// Use this for initialization
 	void Start () {
 		shotDelta = maxShotPower - minShotPower;
@@ -21,7 +23,6 @@ public class CannonFireCtrl : MonoBehaviour {
 		if (Input.GetMouseButton (0)) 
 		{
 			shotCharge = Mathf.Clamp ( shotCharge + chargeSpeed * Time.deltaTime, 0f, 1f);
-			Debug.Log (shotCharge);
 			powerSlider.value = shotCharge;
 		}
 
@@ -32,5 +33,12 @@ public class CannonFireCtrl : MonoBehaviour {
 			shotCharge = 0f;
 			powerSlider.value = shotCharge;
 		}
+
+
 	}
+	void drawBalisticCurve(){
+		
+	}
+
+
 }

@@ -65,12 +65,14 @@
      <Compile Include="Assets\Detonator Explosion Framework\TestScene\TouchToMouse.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\CyberspaceAIController.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\TankMinionMobility.cs" />
+     <Compile Include="Assets\Scripts\AI Scripts\TankMinionPerception.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\TankNavigation.cs" />
+     <Compile Include="Assets\Scripts\AI Scripts\TankTargeting.cs" />
+     <Compile Include="Assets\Scripts\Arena Scripts\AICore.cs" />
      <Compile Include="Assets\Scripts\Arena Scripts\BarrelControll.cs" />
      <Compile Include="Assets\Scripts\Arena Scripts\CannonFireCtrl.cs" />
      <Compile Include="Assets\Scripts\Arena Scripts\CarControll.cs" />
      <Compile Include="Assets\Scripts\Arena Scripts\Explode.cs" />
-     <Compile Include="Assets\Scripts\Arena Scripts\TankTargeting.cs" />
      <Compile Include="Assets\Scripts\Arena Scripts\WheelColliderSetup.cs" />
      <Compile Include="Assets\Scripts\Arena Scripts\WheelController.cs" />
      <Compile Include="Assets\Scripts\CameraControll.cs" />
