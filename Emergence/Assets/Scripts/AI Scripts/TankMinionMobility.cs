@@ -5,12 +5,14 @@ public class TankMinionMobility : MonoBehaviour {
 
 	// Use this for initialization
 	public Transform[] waypoints;
+	public AICore FSM;
 
 	public int currentWaypoint = 0;
 	private NavMeshAgent nav;
 	private float distanceToGround;
 	private Vector3 fixedCenterOfMass;
 	private bool mustYealdToPhysics;
+	private Transform currentDestination;
 
 	public bool isNavControlled;
 	public bool isBeingAffectedByPhysiscs;
@@ -39,28 +41,19 @@ public class TankMinionMobility : MonoBehaviour {
 
 
 	}
-	void FixedUpdate(){
 
-
-		//IsGrounded ();
-
-	}
 	void Update (){
 
 		rigidbodyVelocity = rigidbody.velocity.magnitude;
-		patrol ();
-
-
 	}
 	void LateUpdate(){
 		isAffectedByPhysics ();
-		StartCoroutine(moveTracks ());
-
+		StartCoroutine(updateControllMode ());
 	}
 
 
 	//Toggles the navAgents kinematic controlls.
-	IEnumerator moveTracks(){
+	IEnumerator updateControllMode(){
 		if (mustYealdToPhysics) {
 			mustYealdToPhysics = false;
 			yield return new WaitForFixedUpdate();
@@ -93,10 +86,7 @@ public class TankMinionMobility : MonoBehaviour {
 				print("This collider collided with: " + hit.otherCollider.name);
 				usePhysics();
 			}	
-		}
-
-		 
-		
+		}	
 	}
 
 	bool IsGrounded()
@@ -127,14 +117,32 @@ public class TankMinionMobility : MonoBehaviour {
 			rigidbody.useGravity = false; 
 			nav.enabled=true;
 			nav.ResetPath ();
-			nav.destination = waypoints[currentWaypoint].position;
+			nav.destination = currentDestination.position;
 			//nav.Resume ();
 			Debug.Log ("Switched to NavAgent!");	
 		}
 
 	}
+	//Navigation interface
+	public void setDestination(Transform destination){
+		currentDestination = destination;
+		if (isNavControlled) {
+			nav.destination = currentDestination.position;
+		}
+	}
+	public void setStoppingDistance(float closeEnough){
+		nav.stoppingDistance = closeEnough;
+	}
 
-	void patrol(){
+	public void stop(){
+		nav.ResetPath();
+	}
+
+	public float distanceToDestination(Transform currentDestination){
+		return (currentDestination.position - transform.position).magnitude;
+	}
+
+	void move(){
 
 
 		//The below if is just for debuging
