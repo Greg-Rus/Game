@@ -13,7 +13,9 @@ public class TankTargeting : MonoBehaviour {
 	private Vector3 toTarget;
 	private float yVelocity = 0.0F;
 	private float xVelocity = 0.0F;
-	private float angleDelta;
+	//private float angleDelta;
+	private float xAngleDelta;
+	private float yAngleDelta;
 	private Vector3 relativeTargetLocation;
 	private Vector3 globalPlaneLocation;
 	private Vector3 relativePlaneLocation;
@@ -79,12 +81,12 @@ public class TankTargeting : MonoBehaviour {
 		//Debug.DrawLine (gunPivot.position, globalPlaneLocation , Color.blue);
 		
 		//Calculate the angle between current forward vector and turret plane target position
-		angleDelta = Vector3.Angle (gunPivot.forward, toTarget);
+		xAngleDelta = Vector3.Angle (gunPivot.forward, toTarget);
 
 		//Calculate angle delta to change Y rotation so that over time turret faces target.
 
 		xAngle = Mathf.SmoothDampAngle(gunPivot.localEulerAngles.x, 
-		                               clampAngle(gunPivot.localEulerAngles.x + (angleDelta * direction),20f,300f) ,
+		                               clampAngle(gunPivot.localEulerAngles.x + (xAngleDelta * direction),20f,300f) ,
 		                               ref xVelocity, smoothTimeDamping);
 		
 		//Apply new rotation to turret using local Euler angles
@@ -115,17 +117,24 @@ public class TankTargeting : MonoBehaviour {
 		//Debug.DrawLine (turretPivot.position, globalPlaneLocation , Color.blue);
 		
 		//Calculate the angle between current forward vector and turret plane target position
-		angleDelta = Vector3.Angle (turretPivot.forward, toTarget);
+		yAngleDelta = Vector3.Angle (turretPivot.forward, toTarget);
 		
 		//Calculate angle delta to change Y rotation so that over time turret faces target.
 		yAngle = Mathf.SmoothDampAngle(turretPivot.localEulerAngles.y, 
-		                               turretPivot.localEulerAngles.y + (angleDelta)*direction ,
+		                               turretPivot.localEulerAngles.y + (yAngleDelta)*direction ,
 		                               ref yVelocity, smoothTimeDamping);
 
 		//Debug.Log ("Angle Delta: " + angleDelta + " xAngle: " + yAngle);
 		//Apply new rotation to turret using local Euler angles
 		turretPivot.localEulerAngles = new Vector3 (0f, yAngle, 0f);
 
+	}
+	public bool lockOnTarget(float accuracyThreshold){
+		if (Mathf.Abs (xAngleDelta) <= accuracyThreshold && Mathf.Abs (yAngleDelta) <= accuracyThreshold) {
+						return true;		
+				} else {
+			return false;		
+		}
 	}
 
 	public void resetTurret(){

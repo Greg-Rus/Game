@@ -7,6 +7,7 @@ public class Explode : MonoBehaviour {
 	public float explosionRadius;
 
 	private TankMinionMobility script;
+	private Health healthManager;
 
 
 	void OnCollisionEnter(Collision hit){
@@ -30,6 +31,10 @@ public class Explode : MonoBehaviour {
 				                                 explosionRadius,
 				                                 1f,
 				                                 ForceMode.Impulse);
+				if (healthManager = col.GetComponent(typeof(Health)) as Health){
+					healthManager.takeDamage(20f);
+
+				}
 			}
 		}
 		Destroy(gameObject); // destroy the grenade

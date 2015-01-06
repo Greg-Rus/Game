@@ -5,12 +5,18 @@ public class AICore : MonoBehaviour {
 	public TankMinionMobility mobilitySystem;
 	public TankMinionPerception perceptionSystem;
 	public TankTargeting targetingSystem;
+	public TankMinionAttack weaponSystem;
+	public Health healthSystem;
 	public Transform Player;
 	public State currentState;
 	public Transform[] patrolWaypoints; //Number of waypoints must be greater than one.
+	public float attackRange;
+	public float gunAccuracy;
+	public float hitPoints;
 
 	private bool _hasTarget;
 	private bool _startPatrol;
+	//private bool _isDead;
 	public int currentWaypoint;
 
 	public enum State {Idle, StartPatrol, Patroling, Chase, Attack, Dead}
@@ -19,6 +25,8 @@ public class AICore : MonoBehaviour {
 		//The monion scans for the player by default.
 		setupTargetingSystem ();
 		currentState = State.StartPatrol;
+		healthSystem.setHP (hitPoints);
+		//_isDead = false;
 
 	}
 //	void Start () {	}
@@ -74,12 +82,27 @@ public class AICore : MonoBehaviour {
 	void UpdateIdle(){
 		}
 	void UpdateChase(){
-		mobilitySystem.setStoppingDistance (10f);
+		mobilitySystem.setStoppingDistance (attackRange);
 		moveToAttackDistance ();
+		if (mobilitySystem.distanceToDestination (Player) <= attackRange &&
+		    targetingSystem.lockOnTarget(gunAccuracy)) {
+			currentState = State.Attack;		
 		}
+	}
 	void UpdateAttack(){
+		if (mobilitySystem.distanceToDestination (Player) > attackRange && perceptionSystem.targetInSight()) {
+			currentState = State.Chase;
+		}
+		weaponSystem.fire ();
+
+
 		}
 	void UpdateDead(){
+		mobilitySystem.usePhysics ();
+		mobilitySystem.enabled = false;
+		perceptionSystem.enabled = false;
+		targetingSystem.enabled = false;
+		this.enabled = false;
 		}
 
 	public void targetAquired(){
@@ -104,5 +127,9 @@ public class AICore : MonoBehaviour {
 	}
 	void moveToAttackDistance(){
 		mobilitySystem.setDestination (Player);
+	}
+
+	public void isDestroyed(){
+		currentState = State.Dead;
 	}
 }

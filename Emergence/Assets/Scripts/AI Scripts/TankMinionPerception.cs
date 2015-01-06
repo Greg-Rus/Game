@@ -79,4 +79,9 @@ public class TankMinionPerception : MonoBehaviour {
 		}
 						
 	}
+
+	public bool targetInSight(){
+		return detectedByLongScan || detectedByProximitySense;
+	}
+
 }
