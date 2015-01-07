@@ -1,15 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\AI Scripts\Health.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\AI Scripts\AICoreFramework.cs">
     <Files>
-      <File FileName="Assets\Scripts\AI Scripts\AICore.cs" Line="107" Column="2" />
-      <File FileName="Assets\Scripts\Arena Scripts\CannonFireCtrl.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\AI Scripts\AICoreFramework.cs" Line="8" Column="2" />
+      <File FileName="Assets\Scripts\AI Scripts\AICore.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\AI Scripts\TankMinionPerception.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\AI Scripts\TankMinionMobility.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Arena Scripts\Explode.cs" Line="14" Column="99" />
       <File FileName="Assets\Scripts\AI Scripts\TankTargeting.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\AI Scripts\TankMinionAttack.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\AI Scripts\Health.cs" Line="31" Column="29" />
+      <File FileName="Assets\Scripts\AI Scripts\TankController.cs" Line="8" Column="23" />
+      <File FileName="Assets\Scripts\AI Scripts\StateClasses.cs" Line="42" Column="85" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
