@@ -1,15 +1,16 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\AI Scripts\AICoreFramework.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\AI Scripts\StateClasses.cs">
     <Files>
-      <File FileName="Assets\Scripts\AI Scripts\AICoreFramework.cs" Line="8" Column="2" />
-      <File FileName="Assets\Scripts\AI Scripts\AICore.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\AI Scripts\F_TankController.cs" Line="33" Column="2" />
+      <File FileName="Assets\Scripts\AI Scripts\AICoreFramework.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\AI Scripts\AICore.cs" Line="57" Column="1" />
       <File FileName="Assets\Scripts\AI Scripts\TankMinionPerception.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\AI Scripts\TankMinionMobility.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\AI Scripts\TankTargeting.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\AI Scripts\TankMinionAttack.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\AI Scripts\TankController.cs" Line="8" Column="23" />
-      <File FileName="Assets\Scripts\AI Scripts\StateClasses.cs" Line="42" Column="85" />
+      <File FileName="Assets\Scripts\AI Scripts\StateClasses.cs" Line="79" Column="22" />
+      <File FileName="Assets\Scripts\AI Scripts\F_PasiveSensor.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

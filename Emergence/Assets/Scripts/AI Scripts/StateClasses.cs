@@ -15,15 +15,6 @@ public class StartPatrolState : FSMState
 	
 	public override void Reason(GameObject player, GameObject npc)
 	{
-		if(closestWaypointIndex != -1)
-		{
-			
-			closestWaypointIndex = -1;
-		}
-	}
-	
-	public override void Act (GameObject player, GameObject npc)
-	{
 		Transform closestWaypoint = patrolWaypoints [0];
 		closestWaypointIndex = 0;
 		
@@ -38,27 +29,58 @@ public class StartPatrolState : FSMState
 			}
 			
 		}
-		npc.GetComponent<TankController>().currentWaypoint = closestWaypointIndex;
-		npc.GetComponent<TankController>().SetTransition(Transition.foundClosestWaypoint);
+		//should pass this to constructor.
+		npc.GetComponent<F_TankController>().currentWaypoint = closestWaypointIndex;
+		npc.GetComponent<NavMeshAgent>().SetDestination (patrolWaypoints[closestWaypointIndex].position);
+		npc.GetComponent<F_TankController>().SetTransition(Transition.foundClosestWaypoint);
+	}
+	
+	public override void Act (GameObject player, GameObject npc)
+	{
+		;
 	}
 }
 
+//Patrolling State Class
+
 public class PatrollingState : FSMState
 {
-	private Transform[] patrollWaypoints;
+	private Transform[] patrolWaypoints;
+	private int currentWaypoint;
+	private F_TankController controller;
 	
-	public PatrollingState(Transform[] waypoints)
+	public PatrollingState(Transform[] waypoints, F_TankController parent)
 	{
-		patrollWaypoints = waypoints;
+		patrolWaypoints = waypoints;
+		stateID = StateID.Patroling;
+		controller = parent;
+	}
+	
+	public void DoBeforeEntering()
+	{
+//		currentWaypoint = controller.currentWaypoint;
+//		controller.GetComponent<NavMeshAgent>().stoppingDistance = 0f;
+//		controller.GetComponent<NavMeshAgent>().SetDestination(patrolWaypoints[currentWaypoint].position);
 	}
 	
 	public override void Reason (GameObject PoI, GameObject NPC)
 	{
-	
+		if (NPC.GetComponentInChildren<F_PasiveSensor>().checkScanner(PoI))
+		{
+			NPC.GetComponent<F_TankController>().SetTransition(Transition.poiInSight);
+		}
 	}
 	
 	public override void Act (GameObject PoI, GameObject NPC)
 	{
-		
+		if ((patrolWaypoints[currentWaypoint].position - NPC.transform.position).magnitude  <= 1.0) 
+		{
+			//Debug.Log ("Reached Waypoint: " + currentWaypoint);
+			currentWaypoint++;
+			if (currentWaypoint > patrolWaypoints.Length -1) currentWaypoint = 0;
+			NPC.GetComponent<NavMeshAgent>().SetDestination(patrolWaypoints[currentWaypoint].position);
+			//mobilitySystem.setStoppingDistance (0f);
+		}
 	}
 }
+

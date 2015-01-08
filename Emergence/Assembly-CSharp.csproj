@@ -66,9 +66,10 @@
      <Compile Include="Assets\Scripts\AI Scripts\AICore.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\AICoreFramework.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\CyberspaceAIController.cs" />
+     <Compile Include="Assets\Scripts\AI Scripts\F_PasiveSensor.cs" />
+     <Compile Include="Assets\Scripts\AI Scripts\F_TankController.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\Health.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\StateClasses.cs" />
-     <Compile Include="Assets\Scripts\AI Scripts\TankController.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\TankMinionAttack.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\TankMinionMobility.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\TankMinionPerception.cs" />

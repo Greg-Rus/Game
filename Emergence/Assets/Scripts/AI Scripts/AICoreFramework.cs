@@ -21,12 +21,13 @@ public abstract class FSMState
 
 	public void AddTransition (Transition newTransition, StateID newId)
 	{
-		if (!map.ContainsKey (newTransition)) 
+		if (map.ContainsKey (newTransition)) 
 		{
 			Debug.LogError("Error: Transition " + newTransition + " already in map.");
 			return;
 		}
 		map.Add (newTransition, newId);
+		Debug.Log ("Added transition: " + newTransition);
 	}
 
 	public void DeleteTransition (Transition oldTransition)
@@ -47,6 +48,10 @@ public abstract class FSMState
 	public abstract void Reason(GameObject PoI, GameObject NPC);
 
 	public abstract void Act (GameObject PoI, GameObject NPC);
+	
+	public virtual void DoBeforeEntering() { }
+	
+	public virtual void DoBeforeExiting() { }
 }
 
 public class FSMSystem
@@ -79,8 +84,8 @@ public class FSMSystem
 			{
 				Debug.LogError("Error: State "+ newState.ID + " already in FSM");
 			}
-			states.Add(newState);
 		}
+		states.Add(newState);
 	}
 
 	public void DeleteState(StateID id)
