@@ -22,7 +22,7 @@ public class F_PasiveSensor : MonoBehaviour {
 		closeObjects = new List<string>();
 	}
 	
-	public bool checkScanner(GameObject PoI)
+	public bool checkScanner(Transform PoI)
 	{
 		return scannVisionRange(PoI) || scanProximityRange(PoI);
 	}
@@ -44,10 +44,10 @@ public class F_PasiveSensor : MonoBehaviour {
 		}
 	}	
 	
-	bool scannVisionRange(GameObject PoI)
+	bool scannVisionRange(Transform PoI)
 	{
 		//First check if PoI in view angle.
-		vectorToPoI = PoI.transform.position - transform.position;
+		vectorToPoI = PoI.position - transform.position;
 		angleToPoI = Vector3.Angle (vectorToPoI, transform.forward);
 		if (angleToPoI <= visionAngle) 
 		{
@@ -62,7 +62,7 @@ public class F_PasiveSensor : MonoBehaviour {
 		return false;
 	}
 	
-	bool scanProximityRange(GameObject PoI)
+	bool scanProximityRange(Transform PoI)
 	{
 		if(closeObjects.Contains(PoI.name))
 		{

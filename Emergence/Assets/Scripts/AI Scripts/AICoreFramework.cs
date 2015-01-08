@@ -111,6 +111,7 @@ public class FSMSystem
 			if(state.ID == currentStateID)
 			{
 				currentState  = state;
+				currentState.DoBeforeEntering();
 				break;
 			}
 		}

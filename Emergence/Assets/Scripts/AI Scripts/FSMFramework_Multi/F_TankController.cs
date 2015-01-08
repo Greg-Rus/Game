@@ -26,9 +26,22 @@ public class F_TankController : MonoBehaviour {
 		startPatrol.AddTransition(Transition.foundClosestWaypoint , StateID.Patroling);
 		
 		PatrollingState patrolling = new PatrollingState (patrolWaypoints, this);
+		patrolling.AddTransition(Transition.poiInSight, StateID.Chasing);
+		
+		ChasingState chasing = new ChasingState();
+		chasing.AddTransition(Transition.poiLost, StateID.StartPatrol);
+		chasing.AddTransition(Transition.poiInFireingRange, StateID.Attacking);
+		
+		AttackingState attacking = new AttackingState();
+		attacking.AddTransition(Transition.poiLost, StateID.StartPatrol);
+		
 		fsm = new FSMSystem();
 		fsm.AddState(startPatrol);
 		fsm.AddState(patrolling);
+		fsm.AddState(chasing);
+		fsm.AddState(attacking);
+		
+		
 	}
 	
 }
