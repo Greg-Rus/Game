@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 
 public enum Transition{
-	poiInSight, poiLost, poiInFireingRange, foundClosestWaypoint
+	poiInSight, poiLost, poiInFireingRange, foundClosestWaypoint, isDestroyed
 
 }
 
 public enum StateID{
-	Idle, StartPatrol, Patroling, Chasing, Attacking, Dead
+	Idle, StartPatrol, Patroling, Chasing, Attacking, Destroyed
 }
 
 //public class AICoreFramework : MonoBehaviour {}
@@ -110,6 +110,7 @@ public class FSMSystem
 		{
 			if(state.ID == currentStateID)
 			{
+				currentState.DoBeforeExiting();
 				currentState  = state;
 				currentState.DoBeforeEntering();
 				break;

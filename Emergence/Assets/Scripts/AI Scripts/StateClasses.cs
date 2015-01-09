@@ -66,6 +66,10 @@ public class PatrollingState : FSMState
 		myNav = myController.GetComponent<NavMeshAgent>();
 		
 	}
+	public override void DoBeforeEntering() 
+	{
+		currentWaypoint = myController.currentWaypoint;
+	}
 	
 	public override void Reason ()
 	{
@@ -79,7 +83,6 @@ public class PatrollingState : FSMState
 	public override void Act ()
 	{
 		//aybe instead of this do a method that updates this form startPatrol?
-		currentWaypoint = myController.currentWaypoint;
 		if ((patrolWaypoints[currentWaypoint].position - myController.transform.position).magnitude  <= 1.0) 
 		{
 			currentWaypoint++;
@@ -110,7 +113,7 @@ public class ChasingState : FSMState
 	{
 	
 		if(mySensor.checkScanner(myController.currentPoI) &&
-		   (myController.currentPoI.transform.position - myController.transform.position).magnitude <=10f)
+		   mySensor.isInAttackRange(myController.currentPoI))
 		   {
 		   //This should be an attack transition
 			myController.SetTransition(Transition.poiInFireingRange);
@@ -147,6 +150,11 @@ public class AttackingState : FSMState
 		myAttack = myController.GetComponent<TankMinionAttack>();
 	}
 	
+	public override void DoBeforeEntering()
+	{
+		myNav.stoppingDistance = mySensor.attackRange;
+	}
+	
 	public override void Reason ()
 	{
 		if(!mySensor.checkScanner(myController.currentPoI))
@@ -163,6 +171,45 @@ public class AttackingState : FSMState
 		{
 			myAttack.fire();
 		}
+	}
+	
+	public override void DoBeforeExiting()
+	{
+		myNav.stoppingDistance = 0f;
+	}
+}
+
+public class DestroyedState : FSMState
+{
+	private F_TankController myController;
+	private F_PasiveSensor mySensor;
+	private NavMeshAgent myNav;
+	private F_Targetting myTargetting;
+	private TankMinionAttack myAttack;
+	private F_Stats myStats;	
+	
+	public DestroyedState(F_TankController NPC)
+	{
+		stateID = StateID.Destroyed;
+		myController = NPC;
+		mySensor = myController.GetComponentInChildren<F_PasiveSensor>();
+		myNav = myController.GetComponent<NavMeshAgent>();
+		myTargetting = myController.GetComponent<F_Targetting>();
+		myAttack = myController.GetComponent<TankMinionAttack>();
+		myStats = myController.GetComponent<F_Stats>();
+	}
+	public override void Reason ()
+	{
+	//No more reasoning. This is the final state.
+	}
+	public override void Act ()
+	{
+		myStats.explode();
+		myAttack.enabled = false;
+		myNav.enabled = false;
+		mySensor.enabled = false;
+		myTargetting.enabled = false;
+		myController.enabled = false; //Disable the FSM because final state is reached.
 	}
 }
 

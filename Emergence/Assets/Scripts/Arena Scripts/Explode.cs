@@ -8,6 +8,7 @@ public class Explode : MonoBehaviour {
 
 	private TankMinionMobility script;
 	private Health healthManager;
+	private F_Stats NPCStats;
 
 
 	void OnCollisionEnter(Collision hit){
@@ -33,7 +34,9 @@ public class Explode : MonoBehaviour {
 				                                 ForceMode.Impulse);
 				if (healthManager = col.GetComponent(typeof(Health)) as Health){
 					healthManager.takeDamage(20f);
-
+				}
+				if (NPCStats = col.GetComponent(typeof(F_Stats)) as F_Stats){
+					NPCStats.takeDamage(20f);
 				}
 			}
 		}

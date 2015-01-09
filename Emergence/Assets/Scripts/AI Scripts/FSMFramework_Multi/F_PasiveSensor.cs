@@ -6,6 +6,7 @@ public class F_PasiveSensor : MonoBehaviour {
 
 	public float visionAngle;
 	public float visionRange;
+	public float attackRange;
 	
 	Vector3 vectorToPoI; 
 	float angleToPoI;
@@ -68,5 +69,14 @@ public class F_PasiveSensor : MonoBehaviour {
 		{
 			return true;
 		} else{return false;}
+	}
+	
+	public bool isInAttackRange(Transform PoI)
+	{
+		if ((PoI.position - transform.position).magnitude <= attackRange)
+		{
+		return true;
+		}
+		else {return false;}
 	}
 }
