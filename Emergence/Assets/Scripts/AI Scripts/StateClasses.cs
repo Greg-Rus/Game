@@ -5,23 +5,27 @@ public class StartPatrolState : FSMState
 {
 	private Transform[] patrolWaypoints;
 	private int closestWaypointIndex;
+	private F_TankController myController;
+	private NavMeshAgent myNav;
+	
 //	private Transform closestWaypoint;
 	
-	public StartPatrolState(Transform[] waypoints)
+	public StartPatrolState(F_TankController NPC)
 	{
-		patrolWaypoints = waypoints;
 		stateID = StateID.StartPatrol;
+		patrolWaypoints = NPC.patrolWaypoints;
+		myController = NPC;
+		myNav = NPC.GetComponent<NavMeshAgent>();
 	}
 	
-	public override void Reason(GameObject player, GameObject npc)
+	public override void Reason()
 	{
-		//Transform closestWaypoint = patrolWaypoints [0];
 		closestWaypointIndex = 0;
 		
-		float distanceToClosest = (patrolWaypoints [0].position - npc.transform.position).magnitude;
+		float distanceToClosest = (patrolWaypoints [0].position - myController.transform.position).magnitude;
 		for (int i=1; i<patrolWaypoints.Length; i++) 
 		{
-			float distanceToWaypoint = (patrolWaypoints[i].position - npc.transform.position).magnitude;	
+			float distanceToWaypoint = (patrolWaypoints[i].position - myController.transform.position).magnitude;	
 			if (distanceToWaypoint <= distanceToClosest)
 			{
 				closestWaypointIndex = i;
@@ -29,14 +33,15 @@ public class StartPatrolState : FSMState
 			}
 			
 		}
-		//should pass this to constructor.
-		npc.GetComponent<NavMeshAgent>().stoppingDistance = 0f;
-		npc.GetComponent<F_TankController>().currentWaypoint = closestWaypointIndex;
-		npc.GetComponent<NavMeshAgent>().SetDestination (patrolWaypoints[closestWaypointIndex].position);
-		npc.GetComponent<F_TankController>().SetTransition(Transition.foundClosestWaypoint);
+		//Before we change state we can set the stoppingDistance and destination.
+		myNav.stoppingDistance = 0f;
+		myNav.SetDestination (patrolWaypoints[closestWaypointIndex].position);
+		//Update controller on closest waypoint so that patroll state knows where to pick up from.
+		myController.currentWaypoint = closestWaypointIndex;
+		myController.SetTransition(Transition.foundClosestWaypoint);
 	}
 	
-	public override void Act (GameObject player, GameObject npc)
+	public override void Act ()
 	{
 		;
 	}
@@ -48,40 +53,38 @@ public class PatrollingState : FSMState
 {
 	private Transform[] patrolWaypoints;
 	private int currentWaypoint;
-	private F_TankController controller;
+	private F_TankController myController;
+	private F_PasiveSensor mySensor;
+	private NavMeshAgent myNav;
 	
-	public PatrollingState(Transform[] waypoints, F_TankController parent)
+	public PatrollingState(F_TankController NPC)
 	{
-		patrolWaypoints = waypoints;
+		myController = NPC;
+		patrolWaypoints = myController.patrolWaypoints;
 		stateID = StateID.Patroling;
-		controller = parent;
+		mySensor = myController.GetComponentInChildren<F_PasiveSensor>();
+		myNav = myController.GetComponent<NavMeshAgent>();
+		
 	}
 	
-	public override void DoBeforeEntering()
+	public override void Reason ()
 	{
-		currentWaypoint = controller.currentWaypoint;
-		Debug.Log("Set current waypoint to: " + currentWaypoint);
-//		controller.GetComponent<NavMeshAgent>().stoppingDistance = 0f;
-//		controller.GetComponent<NavMeshAgent>().SetDestination(patrolWaypoints[currentWaypoint].position);
-	}
-	
-	public override void Reason (GameObject PoI, GameObject NPC)
-	{
-		if (NPC.GetComponentInChildren<F_PasiveSensor>().checkScanner(PoI.transform))
+		if (mySensor.checkScanner(myController.currentPoI.transform))
 		{
-			NPC.GetComponent<NavMeshAgent>().stoppingDistance = 10f;
-			NPC.GetComponent<F_TankController>().SetTransition(Transition.poiInSight);
+			myNav.stoppingDistance = 10f;
+			myController.SetTransition(Transition.poiInSight);
 		}
 	}
 	
-	public override void Act (GameObject PoI, GameObject NPC)
+	public override void Act ()
 	{
-		
-		if ((patrolWaypoints[currentWaypoint].position - NPC.transform.position).magnitude  <= 1.0) 
+		//aybe instead of this do a method that updates this form startPatrol?
+		currentWaypoint = myController.currentWaypoint;
+		if ((patrolWaypoints[currentWaypoint].position - myController.transform.position).magnitude  <= 1.0) 
 		{
 			currentWaypoint++;
 			if (currentWaypoint > patrolWaypoints.Length -1) currentWaypoint = 0;
-			NPC.GetComponent<NavMeshAgent>().SetDestination(patrolWaypoints[currentWaypoint].position);
+			myNav.SetDestination(patrolWaypoints[currentWaypoint].position);
 			//mobilitySystem.setStoppingDistance (0f);
 		}
 	}
@@ -89,56 +92,76 @@ public class PatrollingState : FSMState
 
 public class ChasingState : FSMState
 {
-	public ChasingState()
+	private F_TankController myController;
+	private F_PasiveSensor mySensor;
+	private NavMeshAgent myNav;
+	private F_Targetting myTargetting;
+	
+	public ChasingState(F_TankController NPC)
 	{
 		stateID = StateID.Chasing;
+		myController = NPC;
+		mySensor = myController.GetComponentInChildren<F_PasiveSensor>();
+		myNav = myController.GetComponent<NavMeshAgent>();
+		myTargetting = myController.GetComponent<F_Targetting>();
 	}
 	
-	public override void Reason (GameObject PoI, GameObject NPC)
+	public override void Reason ()
 	{
 	
-		if(NPC.GetComponentInChildren<F_PasiveSensor>().checkScanner(PoI.transform) &&
-		   (PoI.transform.position - NPC.transform.position).magnitude <=10f)
+		if(mySensor.checkScanner(myController.currentPoI) &&
+		   (myController.currentPoI.transform.position - myController.transform.position).magnitude <=10f)
 		   {
 		   //This should be an attack transition
-			NPC.GetComponent<F_TankController>().SetTransition(Transition.poiInFireingRange);
+			myController.SetTransition(Transition.poiInFireingRange);
 		   }
 		
-		if(!NPC.GetComponentInChildren<F_PasiveSensor>().checkScanner(PoI.transform))
+		if(!mySensor.checkScanner(myController.currentPoI))
 		{
-			NPC.GetComponent<F_TankController>().SetTransition(Transition.poiLost);
+			myController.SetTransition(Transition.poiLost);
 		}
 	}
 	
-	public override void Act (GameObject PoI, GameObject NPC)
+	public override void Act ()
 	{
-		NPC.GetComponent<NavMeshAgent>().SetDestination(PoI.transform.position);
-		NPC.GetComponent<F_Targetting>().aimTurret(PoI.transform);
+		myNav.SetDestination(myController.currentPoI.position);
+		myTargetting.aimTurret(myController.currentPoI);
 	}
 }
 
 public class AttackingState : FSMState
 {
-	public AttackingState()
+	private F_TankController myController;
+	private F_PasiveSensor mySensor;
+	private NavMeshAgent myNav;
+	private F_Targetting myTargetting;
+	private TankMinionAttack myAttack;
+	
+	public AttackingState(F_TankController NPC)
 	{
 		stateID = StateID.Attacking;
+		myController = NPC;
+		mySensor = myController.GetComponentInChildren<F_PasiveSensor>();
+		myNav = myController.GetComponent<NavMeshAgent>();
+		myTargetting = myController.GetComponent<F_Targetting>();
+		myAttack = myController.GetComponent<TankMinionAttack>();
 	}
 	
-	public override void Reason (GameObject PoI, GameObject NPC)
+	public override void Reason ()
 	{
-		if(!NPC.GetComponentInChildren<F_PasiveSensor>().checkScanner(PoI.transform))
+		if(!mySensor.checkScanner(myController.currentPoI))
 		{
-			NPC.GetComponent<F_TankController>().SetTransition(Transition.poiLost);
+			myController.SetTransition(Transition.poiLost);
 		}
 	}
 	
-	public override void Act (GameObject PoI, GameObject NPC)
+	public override void Act ()
 	{
-		NPC.GetComponent<NavMeshAgent>().SetDestination(PoI.transform.position);
-		NPC.GetComponent<F_Targetting>().aimTurret(PoI.transform);
-		if(NPC.GetComponent<F_Targetting>().lockOnTarget(2f))
+		myNav.SetDestination(myController.currentPoI.position);
+		myTargetting.aimTurret(myController.currentPoI);
+		if(myTargetting.lockOnTarget(2f))
 		{
-			NPC.GetComponent<TankMinionAttack>().fire();
+			myAttack.fire();
 		}
 	}
 }

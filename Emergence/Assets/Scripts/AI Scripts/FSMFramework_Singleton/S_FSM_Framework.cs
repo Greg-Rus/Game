@@ -2,23 +2,22 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public enum Transition{
-	poiInSight, poiLost, poiInFireingRange, foundClosestWaypoint
+//public enum Transition{
+//	poiInSight, poiLost, poiInFireingRange, foundClosestWaypoint
+	
+//}
 
-}
+//public enum StateID{
+//	Idle, StartPatrol, Patroling, Chasing, Attacking, Dead
+//}
 
-public enum StateID{
-	Idle, StartPatrol, Patroling, Chasing, Attacking, Dead
-}
 
-//public class AICoreFramework : MonoBehaviour {}
-
-public abstract class FSMState
+public abstract class S_FSMState
 {
 	protected Dictionary<Transition, StateID> map = new Dictionary<Transition, StateID> ();
 	protected StateID stateID;
 	public StateID ID { get { return stateID; } }
-
+	
 	public void AddTransition (Transition newTransition, StateID newId)
 	{
 		if (map.ContainsKey (newTransition)) 
@@ -29,7 +28,7 @@ public abstract class FSMState
 		map.Add (newTransition, newId);
 		Debug.Log ("Added transition: " + newTransition);
 	}
-
+	
 	public void DeleteTransition (Transition oldTransition)
 	{
 		if (map.ContainsKey (oldTransition)) 
@@ -39,37 +38,38 @@ public abstract class FSMState
 		}
 		Debug.LogError("Error: Transition " + oldTransition + " not present in map.");
 	}
-
+	
 	public StateID GetNextState(Transition trans)
 	{
 		return map[trans];
 	}
-
-	public abstract void Reason();
-
-	public abstract void Act ();
+	//public abstract void SetNPC(GameObject NPC);
+	
+	public abstract void Reason(GameObject PoI, GameObject NPC);
+	
+	public abstract void Act (GameObject PoI, GameObject NPC);
 	
 	public virtual void DoBeforeEntering() { }
 	
 	public virtual void DoBeforeExiting() { }
 }
 
-public class FSMSystem
+public class S_FSMSystem
 {
-	private List<FSMState> states;
-
+	private List<S_FSMState> states;
+	
 	private StateID currentStateID;
 	public StateID CurrentStateID { get { return currentStateID; } }
-
-	private FSMState currentState;
-	public FSMState CurrentState {get {return currentState;}}
-
-	public FSMSystem()
+	
+	private S_FSMState currentState;
+	public S_FSMState CurrentState {get {return currentState;}}
+	
+	public S_FSMSystem()
 	{
-		states = new List<FSMState> ();
+		states = new List<S_FSMState> ();
 	}
-
-	public void AddState(FSMState newState)
+	
+	public void AddState(S_FSMState newState)
 	{
 		if (states.Count == 0) {
 			states.Add(newState);
@@ -77,8 +77,8 @@ public class FSMSystem
 			currentStateID = newState.ID;
 			return;
 		}
-
-		foreach (FSMState knownState in states)
+		
+		foreach (S_FSMState knownState in states)
 		{
 			if(knownState.ID == newState.ID)
 			{
@@ -87,10 +87,10 @@ public class FSMSystem
 		}
 		states.Add(newState);
 	}
-
+	
 	public void DeleteState(StateID id)
 	{
-		foreach (FSMState knowStaste in states) 
+		foreach (S_FSMState knowStaste in states) 
 		{
 			if(knowStaste.ID == id)
 			{
@@ -100,13 +100,13 @@ public class FSMSystem
 		}
 		Debug.LogError ("No state with ID: " + id + " present on state list");
 	}
-
+	
 	public void PerformTransition (Transition trans)
 	{
 		StateID id = currentState.GetNextState (trans);
 		currentStateID = id;
-
-		foreach (FSMState state in states) 
+		
+		foreach (S_FSMState state in states) 
 		{
 			if(state.ID == currentStateID)
 			{
@@ -116,5 +116,5 @@ public class FSMSystem
 			}
 		}
 	}
-
+	
 }

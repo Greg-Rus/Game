@@ -67,6 +67,10 @@
      <Compile Include="Assets\Scripts\AI Scripts\AICoreFramework.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\CyberspaceAIController.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\FSMFramework_Multi\F_TankController.cs" />
+     <Compile Include="Assets\Scripts\AI Scripts\FSMFramework_Singleton\S_FSM_Framework.cs" />
+     <Compile Include="Assets\Scripts\AI Scripts\FSMFramework_Singleton\S_PersonalData.cs" />
+     <Compile Include="Assets\Scripts\AI Scripts\FSMFramework_Singleton\S_StateClasses.cs" />
+     <Compile Include="Assets\Scripts\AI Scripts\FSMFramework_Singleton\S_TankController.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\F_PasiveSensor.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\F_Targetting.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\Health.cs" />
