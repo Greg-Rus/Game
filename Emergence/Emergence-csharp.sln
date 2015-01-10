@@ -5,6 +5,8 @@ Project("{E35DC5F2-10C8-D60B-257C-808F7C47F89D}") = "Emergence", "Assembly-CShar
 EndProject
 Project("{E35DC5F2-10C8-D60B-257C-808F7C47F89D}") = "Emergence", "Assembly-CSharp-vs.csproj", "{B7C9DF55-F00B-44F3-2AC1-CB227895C207}"
 EndProject
+Project("{E35DC5F2-10C8-D60B-257C-808F7C47F89D}") = "Emergence", "Assembly-CSharp-Editor-vs.csproj", "{54157B64-B766-FDE1-3868-9232A1523BE7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,11 +21,15 @@ Global
 		{B7C9DF55-F00B-44F3-2AC1-CB227895C207}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7C9DF55-F00B-44F3-2AC1-CB227895C207}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7C9DF55-F00B-44F3-2AC1-CB227895C207}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54157B64-B766-FDE1-3868-9232A1523BE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54157B64-B766-FDE1-3868-9232A1523BE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54157B64-B766-FDE1-3868-9232A1523BE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54157B64-B766-FDE1-3868-9232A1523BE7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																																																																																																																																																																																																												GlobalSection(MonoDevelopProperties) = preSolution
+																																																																																																																																																																																																															GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
