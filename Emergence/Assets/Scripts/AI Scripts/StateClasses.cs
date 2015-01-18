@@ -7,6 +7,7 @@ public class StartPatrolState : FSMState
 	private int closestWaypointIndex;
 	private F_TankController myController;
 	private NavMeshAgent myNav;
+	private F_ControlMode myControlMode;
 	
 //	private Transform closestWaypoint;
 	
@@ -16,10 +17,12 @@ public class StartPatrolState : FSMState
 		patrolWaypoints = NPC.patrolWaypoints;
 		myController = NPC;
 		myNav = NPC.GetComponent<NavMeshAgent>();
+		myControlMode = NPC.GetComponent<F_ControlMode>();
 	}
 	
 	public override void Reason()
 	{
+		
 		closestWaypointIndex = 0;
 		
 		float distanceToClosest = (patrolWaypoints [0].position - myController.transform.position).magnitude;
@@ -39,6 +42,7 @@ public class StartPatrolState : FSMState
 		//Update controller on closest waypoint so that patroll state knows where to pick up from.
 		myController.currentWaypoint = closestWaypointIndex;
 		myController.SetTransition(Transition.foundClosestWaypoint);
+		
 	}
 	
 	public override void Act ()
@@ -56,6 +60,7 @@ public class PatrollingState : FSMState
 	private F_TankController myController;
 	private F_PasiveSensor mySensor;
 	private NavMeshAgent myNav;
+	private F_ControlMode myControlMode;
 	
 	public PatrollingState(F_TankController NPC)
 	{
@@ -64,18 +69,21 @@ public class PatrollingState : FSMState
 		stateID = StateID.Patroling;
 		mySensor = myController.GetComponentInChildren<F_PasiveSensor>();
 		myNav = myController.GetComponent<NavMeshAgent>();
+		myControlMode = myController.GetComponent<F_ControlMode>();
 		
 	}
 	public override void DoBeforeEntering() 
 	{
 		currentWaypoint = myController.currentWaypoint;
+		myNav.stoppingDistance = 0f;
 	}
 	
 	public override void Reason ()
 	{
+		Debug.Log(myNav.destination);
 		if (mySensor.checkScanner(myController.currentPoI.transform))
 		{
-			myNav.stoppingDistance = 10f;
+			
 			myController.SetTransition(Transition.poiInSight);
 		}
 	}
@@ -83,10 +91,15 @@ public class PatrollingState : FSMState
 	public override void Act ()
 	{
 		//aybe instead of this do a method that updates this form startPatrol?
+		//Debug.Log((patrolWaypoints[currentWaypoint].position - myController.transform.position).magnitude);
 		if ((patrolWaypoints[currentWaypoint].position - myController.transform.position).magnitude  <= 1.0) 
 		{
 			currentWaypoint++;
-			if (currentWaypoint > patrolWaypoints.Length -1) currentWaypoint = 0;
+			if (currentWaypoint > patrolWaypoints.Length -1) 
+			{
+				currentWaypoint = 0;
+			}
+			Debug.Log (currentWaypoint);
 			myNav.SetDestination(patrolWaypoints[currentWaypoint].position);
 			//mobilitySystem.setStoppingDistance (0f);
 		}
@@ -176,6 +189,7 @@ public class AttackingState : FSMState
 	public override void DoBeforeExiting()
 	{
 		myNav.stoppingDistance = 0f;
+		myTargetting.resetTurret();
 	}
 }
 
@@ -186,7 +200,8 @@ public class DestroyedState : FSMState
 	private NavMeshAgent myNav;
 	private F_Targetting myTargetting;
 	private TankMinionAttack myAttack;
-	private F_Stats myStats;	
+	private F_Stats myStats;
+	private F_ControlMode myControlMode;
 	
 	public DestroyedState(F_TankController NPC)
 	{
@@ -197,6 +212,7 @@ public class DestroyedState : FSMState
 		myTargetting = myController.GetComponent<F_Targetting>();
 		myAttack = myController.GetComponent<TankMinionAttack>();
 		myStats = myController.GetComponent<F_Stats>();
+		myControlMode = myController.GetComponent<F_ControlMode>();
 	}
 	public override void Reason ()
 	{
@@ -209,6 +225,8 @@ public class DestroyedState : FSMState
 		myNav.enabled = false;
 		mySensor.enabled = false;
 		myTargetting.enabled = false;
+		myControlMode.usePhysics();
+		myControlMode.enabled=false;
 		myController.enabled = false; //Disable the FSM because final state is reached.
 	}
 }

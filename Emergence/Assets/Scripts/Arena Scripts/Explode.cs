@@ -9,6 +9,7 @@ public class Explode : MonoBehaviour {
 	private TankMinionMobility script;
 	private Health healthManager;
 	private F_Stats NPCStats;
+	private F_ControlMode F_script;
 
 
 	void OnCollisionEnter(Collision hit){
@@ -26,6 +27,12 @@ public class Explode : MonoBehaviour {
 						script.usePhysics();
 					}
 					script = null;
+					
+					if(F_script = col.rigidbody.GetComponent<F_ControlMode>()) {
+						F_script.usePhysics();
+					}
+					F_script = null;
+					
 				}
 				col.rigidbody.AddExplosionForce (explosionPower,
 				                                 transform.position,

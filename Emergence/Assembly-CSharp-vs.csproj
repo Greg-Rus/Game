@@ -39,13 +39,15 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>d:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>D:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>d:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>D:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\AI\Actions\Aim.cs" />
+     <Compile Include="Assets\AI\Actions\Target.cs" />
      <Compile Include="Assets\Detonator Explosion Framework\Sample Supporting Emitters\DetonatorSprayHelper.cs" />
      <Compile Include="Assets\Detonator Explosion Framework\System\Detonator.cs" />
      <Compile Include="Assets\Detonator Explosion Framework\System\DetonatorBurstEmitter.cs" />
@@ -76,6 +78,7 @@
      <Compile Include="Assets\Scripts\AI Scripts\FSMFramework_Singleton\S_StateClasses.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\FSMFramework_Singleton\S_TankController.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\Health.cs" />
+     <Compile Include="Assets\Scripts\AI Scripts\RAIN Actions\RAIN_Actions.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\StateClasses.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\TankMinionAttack.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\TankMinionMobility.cs" />
@@ -106,6 +109,7 @@
      <Compile Include="Assets\Scripts\MouseClick.cs" />
      <Compile Include="Assets\Scripts\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\PoolTest.cs" />
+     <Compile Include="Assets\Scripts\ShieldControl.cs" />
      <Compile Include="Assets\Scripts\SimpleMove.cs" />
      <Compile Include="Assets\Scripts\SimpleRotation.cs" />
      <Compile Include="Assets\Scripts\rotationTogle.cs" />
@@ -135,13 +139,13 @@
  <HintPath>D:/GitHub/Game/Emergence/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
- <HintPath>d:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
- </Reference>
- <Reference Include="RAINMetaform">
- <HintPath>D:/GitHub/Game/Emergence/Assets/RAIN/RAINMetaform.dll</HintPath>
+ <HintPath>D:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="RAIN">
  <HintPath>D:/GitHub/Game/Emergence/Assets/RAIN/RAIN.dll</HintPath>
+ </Reference>
+ <Reference Include="RAINMetaform">
+ <HintPath>D:/GitHub/Game/Emergence/Assets/RAIN/RAINMetaform.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -39,10 +39,10 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>d:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>D:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>d:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>D:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
@@ -74,16 +74,13 @@
  <HintPath>D:/GitHub/Game/Emergence/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
- <HintPath>d:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
+ <HintPath>D:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
- <HintPath>d:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/Editor/UnityEditor.UI.dll</HintPath>
+ <HintPath>D:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/Editor/UnityEditor.UI.dll</HintPath>
  </Reference>
- <Reference Include="UnityEditor.Graphs">
- <HintPath>d:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
- </Reference>
- <Reference Include="RAINUpdater">
- <HintPath>D:/GitHub/Game/Emergence/Assets/RAIN/Editor/RAINUpdater.dll</HintPath>
+ <Reference Include="RAIN">
+ <HintPath>D:/GitHub/Game/Emergence/Assets/RAIN/RAIN.dll</HintPath>
  </Reference>
  <Reference Include="RAINMetaform">
  <HintPath>D:/GitHub/Game/Emergence/Assets/RAIN/RAINMetaform.dll</HintPath>
@@ -91,14 +88,17 @@
  <Reference Include="AetherUnity">
  <HintPath>D:/GitHub/Game/Emergence/Assets/RAIN/Editor/AetherUnity.dll</HintPath>
  </Reference>
- <Reference Include="RAIN">
- <HintPath>D:/GitHub/Game/Emergence/Assets/RAIN/RAIN.dll</HintPath>
- </Reference>
  <Reference Include="LegionRestModel">
  <HintPath>D:/GitHub/Game/Emergence/Assets/RAIN/Editor/LegionRestModel.dll</HintPath>
  </Reference>
  <Reference Include="RAINEditor">
  <HintPath>D:/GitHub/Game/Emergence/Assets/RAIN/Editor/RAINEditor.dll</HintPath>
+ </Reference>
+ <Reference Include="RAINUpdater">
+ <HintPath>D:/GitHub/Game/Emergence/Assets/RAIN/Editor/RAINUpdater.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Graphs">
+ <HintPath>D:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -65,7 +65,7 @@ public class WheelColliderSetup : MonoBehaviour {
 			wheel.suspensionSpring = newSuspensionSpring;
 		}
 	}
-	void Update(){
+/*	void Update(){
 		if (Input.GetButtonDown ("Jump") == true) {
 		
 			for ( int i = 2; i < 6; i++){
@@ -95,5 +95,5 @@ public class WheelColliderSetup : MonoBehaviour {
 		}
 
 
-	}
+	}*/
 }

@@ -51,7 +51,7 @@ public class F_ControlMode : MonoBehaviour {
 	void OnCollisionEnter(Collision col)
 	{
 		foreach (ContactPoint hit in col.contacts) {
-			if (hit.otherCollider.rigidbody.name == "Mako"){
+			if (hit.otherCollider.rigidbody && hit.otherCollider.rigidbody.name == "Mako"){
 				print("This collider collided with: " + hit.otherCollider.rigidbody.name);
 				usePhysics();
 			}	
@@ -68,11 +68,13 @@ public class F_ControlMode : MonoBehaviour {
 	{	
 		if (!isAffectedByPhysics ()) 
 		{
-			destinationBeforeHit = nav.destination;
+			//destinationBeforeHit = nav.destination;
 			isNavControlled = false;
 			rigidbody.isKinematic = false; 
 			rigidbody.useGravity = true; 
-			nav.enabled=false;
+			//nav.enabled=false;
+			nav.updatePosition = false;
+			nav.updateRotation = false;
 			mustYealdToPhysics = true;
 			Debug.Log ("Switched to Physics!");
 		}
@@ -85,9 +87,11 @@ public class F_ControlMode : MonoBehaviour {
 			isNavControlled = true;
 			rigidbody.isKinematic = true; 
 			rigidbody.useGravity = false; 
-			nav.enabled=true;
-			nav.ResetPath ();
-			nav.destination = destinationBeforeHit;
+			//nav.enabled=true;
+			nav.updatePosition = true;
+			nav.updateRotation = true;
+			//nav.ResetPath ();
+			//nav.destination = destinationBeforeHit;
 			//nav.Resume ();
 			Debug.Log ("Switched to NavAgent!");	
 		}
