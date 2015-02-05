@@ -91,6 +91,9 @@
  <Reference Include="RAINEditor">
  <HintPath>D:/GitHub/Game/Emergence/Assets/RAIN/Editor/RAINEditor.dll</HintPath>
  </Reference>
+ <Reference Include="RAINMetaformEditor">
+ <HintPath>D:/GitHub/Game/Emergence/Assets/RAIN/Editor/RAINMetaformEditor.dll</HintPath>
+ </Reference>
  <Reference Include="RAINUpdater">
  <HintPath>D:/GitHub/Game/Emergence/Assets/RAIN/Editor/RAINUpdater.dll</HintPath>
  </Reference>

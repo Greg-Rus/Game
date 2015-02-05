@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using RAIN.Action;
 using RAIN.Core;
 using RAIN.Representation;
+using RAIN.Motion;
 
 [RAINAction]
 public class Aim : RAINAction
@@ -15,26 +16,15 @@ public class Aim : RAINAction
 	
     public override void Start(RAIN.Core.AI ai)
     {
-		
-		
         base.Start(ai);
-		myTargetting = ai.Body.GetComponentInChildren<F_Targetting>();
-		myTarget = ai.WorkingMemory.GetItem<GameObject>("DetectedPlayer");
-		Debug.Log (myTarget.name);
-		//Debug.Log (ai.WorkingMemory.GetItem<GameObject>("DetectedPlayer"));
-		//Debug.Log (ai.WorkingMemory.GetItemType("DetectedPlayer"));
-		//Debug.Log (target.ToString());
-		//objects = ai.WorkingMemory.GetItems();
-		
-		//foreach (string s in objects){
-		//Debug.Log (s);
-		//}
+		myTargetting = ai.Body.GetComponentInChildren<F_Targetting>();	
     }
 
     public override ActionResult Execute(RAIN.Core.AI ai)
     {
-		
-        return ActionResult.SUCCESS;
+		MoveLookTarget tTarget = MoveLookTarget.GetTargetFromVariable(ai.WorkingMemory, target.VariableName);
+		myTargetting.aimTurret(tTarget.TransformTarget);
+		return ActionResult.NONE;
     }
 
     public override void Stop(RAIN.Core.AI ai)

@@ -18,6 +18,7 @@ public class StartPatrolState : FSMState
 		myController = NPC;
 		myNav = NPC.GetComponent<NavMeshAgent>();
 		myControlMode = NPC.GetComponent<F_ControlMode>();
+		
 	}
 	
 	public override void Reason()
@@ -55,6 +56,7 @@ public class StartPatrolState : FSMState
 
 public class PatrollingState : FSMState
 {
+	private int closestWaypointIndex;
 	private Transform[] patrolWaypoints;
 	private int currentWaypoint;
 	private F_TankController myController;
@@ -74,16 +76,13 @@ public class PatrollingState : FSMState
 	}
 	public override void DoBeforeEntering() 
 	{
-		currentWaypoint = myController.currentWaypoint;
-		myNav.stoppingDistance = 0f;
+		myController.SetClosestWaypoint();
 	}
 	
 	public override void Reason ()
 	{
-		Debug.Log(myNav.destination);
 		if (mySensor.checkScanner(myController.currentPoI.transform))
-		{
-			
+		{	
 			myController.SetTransition(Transition.poiInSight);
 		}
 	}
@@ -91,17 +90,15 @@ public class PatrollingState : FSMState
 	public override void Act ()
 	{
 		//aybe instead of this do a method that updates this form startPatrol?
-		//Debug.Log((patrolWaypoints[currentWaypoint].position - myController.transform.position).magnitude);
-		if ((patrolWaypoints[currentWaypoint].position - myController.transform.position).magnitude  <= 1.0) 
+		if ((patrolWaypoints[myController.currentWaypoint].position - myController.transform.position).magnitude  <= 1.0) 
 		{
-			currentWaypoint++;
-			if (currentWaypoint > patrolWaypoints.Length -1) 
+			myController.currentWaypoint++;
+			if (myController.currentWaypoint > patrolWaypoints.Length -1) 
 			{
-				currentWaypoint = 0;
+				myController.currentWaypoint = 0;
 			}
-			Debug.Log (currentWaypoint);
-			myNav.SetDestination(patrolWaypoints[currentWaypoint].position);
-			//mobilitySystem.setStoppingDistance (0f);
+			Debug.Log (myController.currentWaypoint);
+			myNav.SetDestination(patrolWaypoints[myController.currentWaypoint].position);
 		}
 	}
 }
@@ -188,7 +185,6 @@ public class AttackingState : FSMState
 	
 	public override void DoBeforeExiting()
 	{
-		myNav.stoppingDistance = 0f;
 		myTargetting.resetTurret();
 	}
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using RAIN.Core;
 
 public class Explode : MonoBehaviour {
 	public GameObject explosion;
@@ -10,6 +11,7 @@ public class Explode : MonoBehaviour {
 	private Health healthManager;
 	private F_Stats NPCStats;
 	private F_ControlMode F_script;
+	private AIRig tRig;
 
 
 	void OnCollisionEnter(Collision hit){
@@ -42,6 +44,15 @@ public class Explode : MonoBehaviour {
 				if (healthManager = col.GetComponent(typeof(Health)) as Health){
 					healthManager.takeDamage(20f);
 				}
+				tRig = col.rigidbody.GetComponentInChildren<AIRig>();
+				Debug.Log (tRig);
+				if (tRig != null)
+				{
+					Debug.Log (tRig);
+					float currentHelath = tRig.AI.WorkingMemory.GetItem<float>("health");
+					tRig.AI.WorkingMemory.SetItem<float>("health", currentHelath - 20f);
+				}
+				
 				if (NPCStats = col.GetComponent(typeof(F_Stats)) as F_Stats){
 					NPCStats.takeDamage(20f);
 				}

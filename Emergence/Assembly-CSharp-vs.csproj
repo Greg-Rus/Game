@@ -47,7 +47,11 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\AI\Actions\Aim.cs" />
+     <Compile Include="Assets\AI\Actions\DistanceToTarget.cs" />
+     <Compile Include="Assets\AI\Actions\Fire.cs" />
      <Compile Include="Assets\AI\Actions\Target.cs" />
+     <Compile Include="Assets\AI\Actions\explode.cs" />
+     <Compile Include="Assets\AI\Actions\reset_turret.cs" />
      <Compile Include="Assets\Detonator Explosion Framework\Sample Supporting Emitters\DetonatorSprayHelper.cs" />
      <Compile Include="Assets\Detonator Explosion Framework\System\Detonator.cs" />
      <Compile Include="Assets\Detonator Explosion Framework\System\DetonatorBurstEmitter.cs" />
@@ -79,6 +83,9 @@
      <Compile Include="Assets\Scripts\AI Scripts\FSMFramework_Singleton\S_TankController.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\Health.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\RAIN Actions\RAIN_Actions.cs" />
+     <Compile Include="Assets\Scripts\AI Scripts\RAIN Actions\RAIN_Minion_Explosion.cs" />
+     <Compile Include="Assets\Scripts\AI Scripts\RAIN Actions\RAIN_Minion_Fire.cs" />
+     <Compile Include="Assets\Scripts\AI Scripts\RAIN Actions\RAIN_Projectile_Explode.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\StateClasses.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\TankMinionAttack.cs" />
      <Compile Include="Assets\Scripts\AI Scripts\TankMinionMobility.cs" />

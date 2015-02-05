@@ -102,7 +102,9 @@ public class TankMinionMobility : MonoBehaviour {
 			isNavControlled = false;
 			rigidbody.isKinematic = false; 
 			rigidbody.useGravity = true; 
-			nav.enabled=false;
+			//nav.enabled=false;
+			nav.updatePosition = false;
+			nav.updateRotation = false;
 			mustYealdToPhysics = true;
 			Debug.Log ("Switched to Physics!");
 		}
@@ -115,9 +117,11 @@ public class TankMinionMobility : MonoBehaviour {
 			isNavControlled = true;
 			rigidbody.isKinematic = true; 
 			rigidbody.useGravity = false; 
-			nav.enabled=true;
-			nav.ResetPath ();
-			nav.destination = currentDestination.position;
+			//nav.enabled=true;
+			nav.updatePosition = true;
+			nav.updateRotation = true;
+			//nav.ResetPath ();
+			//nav.destination = currentDestination.position;
 			//nav.Resume ();
 			Debug.Log ("Switched to NavAgent!");	
 		}
@@ -126,12 +130,15 @@ public class TankMinionMobility : MonoBehaviour {
 	//Navigation interface
 	public void setDestination(Transform destination){
 		currentDestination = destination;
-		if (isNavControlled) {
-			nav.destination = currentDestination.position;
-		}
+		nav.destination = currentDestination.position;
+		//if (isNavControlled) {
+		//	nav.destination = currentDestination.position;
+		//}
 	}
 	public void setStoppingDistance(float closeEnough){
-		nav.stoppingDistance = closeEnough;
+		if (nav.stoppingDistance != closeEnough){
+			nav.stoppingDistance = closeEnough;
+		}
 	}
 
 	public void stop(){

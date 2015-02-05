@@ -16,10 +16,11 @@ public class AICore : MonoBehaviour {
 
 	private bool _hasTarget;
 	private bool _startPatrol;
+	private bool firstStateUpdate;
 	//private bool _isDead;
 	public int currentWaypoint;
 
-	public enum State {Idle, StartPatrol, Patroling, Chase, Attack, Dead}
+	public enum State {StartPatrol, Patroling, Chase, Attack, Dead}
 	// Use this for initialization
 	void Awake(){
 		//The monion scans for the player by default.
@@ -41,7 +42,7 @@ public class AICore : MonoBehaviour {
 	void UpdateState(){
 		switch (currentState)
 		{
-			case State.Idle : UpdateIdle(); break;
+			//case State.Idle : UpdateIdle(); break;
 			case State.StartPatrol : StartPatrol();break;
 			case State.Patroling : UpdatePatrol();break;
 			case State.Chase : UpdateChase();break;
@@ -50,6 +51,13 @@ public class AICore : MonoBehaviour {
 
 		}
 	}
+	
+	public void ChangeState(State newState)
+	{
+		currentState = newState;
+		firstStateUpdate = true;
+	}
+	
 	void StartPatrol(){
 		//Called when patrol is started or restarted. Choses the closes waypoint on the patrol route and sets state to patroling.
 		Transform closestWaypoint = patrolWaypoints [0];
@@ -63,9 +71,9 @@ public class AICore : MonoBehaviour {
 				currentWaypoint = i;
 			}
 		}
-		mobilitySystem.setDestination (closestWaypoint);
+		mobilitySystem.setDestination (patrolWaypoints [currentWaypoint]);
 		mobilitySystem.setStoppingDistance (0f);
-		currentState = State.Patroling;
+		ChangeState(State.Patroling);
 	}
 
 	void UpdatePatrol(){
@@ -79,19 +87,22 @@ public class AICore : MonoBehaviour {
 		}
 	}
 
-	void UpdateIdle(){
-		}
+//	void UpdateIdle(){
+//		}
 	void UpdateChase(){
-		mobilitySystem.setStoppingDistance (attackRange);
+		if(firstStateUpdate){
+			mobilitySystem.setStoppingDistance (attackRange);
+			firstStateUpdate = false;
+		}
 		moveToAttackDistance ();
 		if (mobilitySystem.distanceToDestination (Player) <= attackRange &&
 		    targetingSystem.lockOnTarget(gunAccuracy)) {
-			currentState = State.Attack;		
+			ChangeState(State.Attack);	
 		}
 	}
 	void UpdateAttack(){
 		if (mobilitySystem.distanceToDestination (Player) > attackRange && perceptionSystem.targetInSight()) {
-			currentState = State.Chase;
+			ChangeState(State.Chase);
 		}
 		weaponSystem.fire ();
 
@@ -109,7 +120,7 @@ public class AICore : MonoBehaviour {
 
 		targetingSystem.target = Player;
 		//_hasTarget = true;
-		currentState = State.Chase;
+		ChangeState(State.Chase);
 	}
 	public void targetLost(){
 		//if target no longer in sensor range turn off scipt and set target to null. Next time it might be a different PoI
@@ -117,7 +128,7 @@ public class AICore : MonoBehaviour {
 		targetingSystem.target = null;
 		targetingSystem.resetTurret ();
 		//_hasTarget = false;
-		currentState = State.StartPatrol;
+		ChangeState(State.StartPatrol);
 	}
 	void setupTargetingSystem(){
 		//initial setup of targeting system
@@ -130,6 +141,6 @@ public class AICore : MonoBehaviour {
 	}
 
 	public void isDestroyed(){
-		currentState = State.Dead;
+		ChangeState(State.Dead);
 	}
 }
