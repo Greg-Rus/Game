@@ -51,7 +51,9 @@
      <Compile Include="Assets\AI\Actions\Fire.cs" />
      <Compile Include="Assets\AI\Actions\Target.cs" />
      <Compile Include="Assets\AI\Actions\explode.cs" />
+     <Compile Include="Assets\AI\Actions\groundedTest.cs" />
      <Compile Include="Assets\AI\Actions\reset_turret.cs" />
+     <Compile Include="Assets\AI\Actions\test.cs" />
      <Compile Include="Assets\Detonator Explosion Framework\Sample Supporting Emitters\DetonatorSprayHelper.cs" />
      <Compile Include="Assets\Detonator Explosion Framework\System\Detonator.cs" />
      <Compile Include="Assets\Detonator Explosion Framework\System\DetonatorBurstEmitter.cs" />
