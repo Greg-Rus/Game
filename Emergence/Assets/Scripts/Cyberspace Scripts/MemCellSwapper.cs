@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+//using System;
 using System.Collections;
+//using System.Diagnostics;
 
 public class MemCellSwapper : MonoBehaviour {
 	public GameObject memCell;
@@ -18,21 +20,16 @@ public class MemCellSwapper : MonoBehaviour {
 	Vector3 position;
 	Vector3 spawnSpot;
 	enum direction {left, right, up, down};
+	//Stopwatch stopWatch;
+	//System.IO.StreamWriter file;
 
-	void Awake(){
-
-
-	
-	}
-
-	
 
 	// Use this for initialization
 	void Start () {
 
 		//Debug.Log ("Starting");
 		memCellPool = pool.thePool;
-		Debug.Log ("Pool refernce set");
+		//Debug.Log ("Pool refernce set");
 		//memCellPool = *pool.getPoolRef ();
 
 		//memCellPool = new ObjectPool (memCell, objectPoolSize);
@@ -46,6 +43,9 @@ public class MemCellSwapper : MonoBehaviour {
 		rBound = (int)(curX + 1f);
 		tBound = (int)(curZ + 1f);
 		bBound = (int)curZ;
+		
+		//stopWatch = new Stopwatch();
+		//file = new System.IO.StreamWriter("K:\\Logs\\BenchmarkPoolStore.txt"); // FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None
 		
 
 	}
@@ -105,8 +105,16 @@ public class MemCellSwapper : MonoBehaviour {
 			while (i < rowEnd) {
 				spawnSpot = new Vector3 (i, ySpawnPosition, j);
 				
+				//TimeSpan begin = Process.GetCurrentProcess().TotalProcessorTime;
+
+				
 				GameObject spawnedPrefab = memCellPool.retrieveObject();
 				spawnedPrefab.transform.position = spawnSpot;
+				
+				
+				//TimeSpan end = Process.GetCurrentProcess().TotalProcessorTime;
+				//UnityEngine.Debug.Log("Measured time: " + (end - begin).Ticks + " ms.");
+				
 				i = i + 1f;
 			}
 		}
@@ -134,8 +142,18 @@ public class MemCellSwapper : MonoBehaviour {
 	}
 
 	void OnTriggerExit(Collider other){
+		//stopWatch.Reset();
+		//stopWatch.Start();
+	
 		other.GetComponent<ElevateMemCell>().reset();
 		memCellPool.storeObject (other.gameObject);
 
+		//stopWatch.Stop();
+		//TimeSpan ts = stopWatch.Elapsed;
+		//file.WriteLine(ts.TotalMilliseconds + "\n");
+
 	}
+//	void OnApplicationQuit(){
+//		file.Close();
+//	}
 }

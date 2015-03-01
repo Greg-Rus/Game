@@ -29,7 +29,7 @@ public class F_ControlMode : MonoBehaviour {
 	
 	// Update is called once per frame
 	void LateUpdate(){
-		isAffectedByPhysics ();
+		//isAffectedByPhysics ();
 		StartCoroutine(updateControllMode ());
 	}
 	IEnumerator updateControllMode(){

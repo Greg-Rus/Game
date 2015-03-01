@@ -12,8 +12,9 @@ public class ObjectPool {
 //	private int activeCounter;
 	private int nextInactiveObject;
 	private int expandAmount;
+	private GameObject topInactiveObj;
 
-	public ObjectPool(GameObject objectType, int number, int expand = 10){
+	public ObjectPool(GameObject objectType, int number, int expand = 50){
 		type = objectType;
 		quantity = number;
 		expandAmount = expand;
@@ -34,7 +35,7 @@ public class ObjectPool {
 	{
 
 		inactivePool [nextInactiveObject].SetActive(true);
-		GameObject topInactiveObj = inactivePool [nextInactiveObject];
+		topInactiveObj = inactivePool [nextInactiveObject];
 		if (nextInactiveObject == quantity - 1) {
 			expandPool();
 			nextInactiveObject++;

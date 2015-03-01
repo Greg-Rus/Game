@@ -19,7 +19,7 @@ public class CyberspaceAIController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void patrol(){
-		Debug.Log (currentWaypoint);
+		//Debug.Log (currentWaypoint);
 		if (nav.remainingDistance <= 1.0) {
 			currentWaypoint++;
 		}	

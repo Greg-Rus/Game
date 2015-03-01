@@ -103,6 +103,8 @@
      <Compile Include="Assets\Scripts\CameraControll.cs" />
      <Compile Include="Assets\Scripts\CameraFollow.cs" />
      <Compile Include="Assets\Scripts\CyberCameraControll.cs" />
+     <Compile Include="Assets\Scripts\Cyberspace Scripts\Benchmark_Instantiate.cs" />
+     <Compile Include="Assets\Scripts\Cyberspace Scripts\Benchmark_Pool.cs" />
      <Compile Include="Assets\Scripts\Cyberspace Scripts\ElevateMemCell.cs" />
      <Compile Include="Assets\Scripts\Cyberspace Scripts\MemArrayController.cs" />
      <Compile Include="Assets\Scripts\Cyberspace Scripts\MemCellBuffer.cs" />
