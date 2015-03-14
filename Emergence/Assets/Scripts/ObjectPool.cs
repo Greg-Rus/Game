@@ -4,12 +4,9 @@ using System.Collections.Generic;
 
 
 public class ObjectPool {
-
 	private GameObject type;
 	private int quantity;
-//	private GameObject[] activePool; 
 	private GameObject[] inactivePool;
-//	private int activeCounter;
 	private int nextInactiveObject;
 	private int expandAmount;
 	private GameObject topInactiveObj;
@@ -20,20 +17,16 @@ public class ObjectPool {
 		expandAmount = expand;
 		inactivePool = new GameObject[quantity];
 
-		for (int i = 0; i < quantity; i++) {
-		
+		for (int i = 0; i < quantity; i++) {		
 			GameObject newObject = GameObject.Instantiate(type, new Vector3(0,0,0), Quaternion.identity) as GameObject;
 			newObject.SetActive(false);
 			inactivePool[i] = newObject;
-
 		}
 		nextInactiveObject = 0;
-
 	}
-
+	
 	public GameObject retrieveObject()
 	{
-
 		inactivePool [nextInactiveObject].SetActive(true);
 		topInactiveObj = inactivePool [nextInactiveObject];
 		if (nextInactiveObject == quantity - 1) {
@@ -48,11 +41,9 @@ public class ObjectPool {
 
 	public void storeObject(GameObject removedObject)
 	{
-
 		nextInactiveObject--;
+		removedObject.SetActive(false);
 		inactivePool [nextInactiveObject] = removedObject;
-		inactivePool [nextInactiveObject].SetActive(false);
-
 	}
 
 	public void expandPool(){
@@ -63,9 +54,5 @@ public class ObjectPool {
 			inactivePool[i] = newObject;
 		}
 		quantity = quantity + expandAmount;
-		Debug.Log ("Pool Expanded");
-
-
 	}
-
 }

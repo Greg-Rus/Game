@@ -11,6 +11,8 @@ public class Benchmark_Pool : MonoBehaviour {
 	Stopwatch stopWatch;
 	System.IO.StreamWriter file;
 	System.IO.StreamWriter storeTimes;
+	GameObject spawnedPrefab;
+	TimeSpan ts;
 	// Use this for initialization
 	void Start () {
 		pool = poolControler.thePool;
@@ -18,37 +20,45 @@ public class Benchmark_Pool : MonoBehaviour {
 		stopWatch = new Stopwatch();
 		file = new System.IO.StreamWriter("K:\\Logs\\BenchmarkPoolRetrieve_Isolated.txt"); // FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None
 		storeTimes = new System.IO.StreamWriter("K:\\Logs\\BenchmarkPoolStore_Isolated.txt");
+			
+}
+	void Update(){
+	
+		runTest();
+	
+	}
 		
-		for (int i =0; i<numberOfCycles; i++){
-			stopWatch.Reset ();
-			stopWatch.Start();
-			
-			GameObject spawnedPrefab = pool.retrieveObject();
-			spawnedPrefab.transform.position = new Vector3 (i, 0, 0);
-			
-			stopWatch.Stop();
-			TimeSpan ts = stopWatch.Elapsed;
-			file.WriteLine(ts.TotalMilliseconds + "\t");
-			
-			objects[i] = spawnedPrefab;
-		}
-		
-		for (int i =0; i<numberOfCycles; i++){
-			stopWatch.Reset ();
-			stopWatch.Start();
-			
-			pool.storeObject(objects[i]);
-			
-			stopWatch.Stop();
-			TimeSpan ts = stopWatch.Elapsed;
-			storeTimes.WriteLine(ts.TotalMilliseconds + "\t");
-		}
+	
 		//TimeSpan ts = stopWatch.Elapsed;
 		//UnityEngine.Debug.Log(ts.TotalMilliseconds);
-	}
+	
 	void OnApplicationQuit(){
 		file.Close();
 		storeTimes.Close ();
+	}
+	
+	void runTest(){
+	
+		stopWatch.Reset ();
+		stopWatch.Start();
+		
+		spawnedPrefab = pool.retrieveObject();
+		spawnedPrefab.transform.position = new Vector3 (0, 0, 0);
+		
+		stopWatch.Stop();
+		ts = stopWatch.Elapsed;
+		file.WriteLine(ts.TotalMilliseconds + "\t");
+		
+		stopWatch.Reset ();
+		stopWatch.Start();
+		
+		pool.storeObject(spawnedPrefab);
+		
+		stopWatch.Stop();
+		ts = stopWatch.Elapsed;
+		storeTimes.WriteLine(ts.TotalMilliseconds + "\t");
+		
+	
 	}
 	
 
