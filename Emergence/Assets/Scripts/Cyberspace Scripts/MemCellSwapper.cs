@@ -142,18 +142,13 @@ public class MemCellSwapper : MonoBehaviour {
 	}
 
 	void OnTriggerExit(Collider other){
-		//stopWatch.Reset();
-		//stopWatch.Start();
-	
-		other.GetComponent<ElevateMemCell>().reset();
-		memCellPool.storeObject (other.gameObject);
-
-		//stopWatch.Stop();
-		//TimeSpan ts = stopWatch.Elapsed;
-		//file.WriteLine(ts.TotalMilliseconds + "\n");
-
+		ElevateMemCell cellScript;
+		if((cellScript = other.GetComponent<ElevateMemCell>()) != null)
+		{
+			cellScript.reset();
+			memCellPool.storeObject (other.gameObject);
+		}
+		
 	}
-//	void OnApplicationQuit(){
-//		file.Close();
-//	}
+
 }

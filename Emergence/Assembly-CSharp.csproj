@@ -116,6 +116,7 @@
      <Compile Include="Assets\Scripts\Cyberspace Scripts\SensorHitDetection.cs" />
      <Compile Include="Assets\Scripts\CyberspacePlayerController.cs" />
      <Compile Include="Assets\Scripts\DieOnCollisionExit.cs" />
+     <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\LockRotation.cs" />
      <Compile Include="Assets\Scripts\MouseClick.cs" />
      <Compile Include="Assets\Scripts\ObjectPool.cs" />
@@ -124,6 +125,7 @@
      <Compile Include="Assets\Scripts\SimpleMove.cs" />
      <Compile Include="Assets\Scripts\SimpleRotation.cs" />
      <Compile Include="Assets\Scripts\Timer.cs" />
+     <Compile Include="Assets\Scripts\UI_InteractTrigger.cs" />
      <Compile Include="Assets\Scripts\rotationTogle.cs" />
      <Compile Include="Assets\arrayTest.cs" />
      <None Include="Assets\Standard Assets\Projectors\Guidelines.txt" />

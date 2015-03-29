@@ -12,26 +12,34 @@ public class ElevateMemCell : MonoBehaviour {
 	private float y;
 	private Vector3 position;
 	private float targetElevation ;
+	private Transform myTransform;
 	void Start () {
+	
 		targetElevation = baseLevel;
+		myTransform = GetComponent<Transform>();
 
 	}
 	
 
 	void Update () {
-		position = transform.position;
+		position = myTransform.position;
 
 		if (position.y < targetElevation - 0.2f) {
 
 			position.y +=  riseSpeed * Time.deltaTime;
-			transform.position = position;
+			myTransform.position = position;
 		
 		}
 		else if (position.y > targetElevation + 0.2f) {
 				
 			position.y -=  dropSpeed * Time.deltaTime;
-			transform.position = position;
+			myTransform.position = position;
 
+		}
+		else 
+		{
+			position.y = targetElevation;
+			myTransform.position = position;
 		}
 
 //		lastActiveSensors = activeSensors;

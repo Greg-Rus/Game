@@ -30,6 +30,7 @@ public class CarControll : MonoBehaviour {
 	public float asymptote;
 	
 	public float antiRoll;
+	public Transform centerOfMass;
 
 
 	private float currentTorque;
@@ -77,8 +78,6 @@ public class CarControll : MonoBehaviour {
 		ApplySteeringAngleToWheels ();
 		UpdateFriction(relativeVelocity);
 		updateAnitRollBArs();
-		//UpdateSlip ();
-
 	}
 
 	void Update() {
@@ -209,11 +208,10 @@ public class CarControll : MonoBehaviour {
 	void UpdateFriction(Vector3 relativeVelocity)
 	{
 		float sqrVel = relativeVelocity.x * relativeVelocity.x * slipFactor;
-		
+
 		// Add extra sideways friction based on the car's turning velocity to avoid slipping
 		extremum = Mathf.Clamp(300 - sqrVel, 0, 300);
 		asymptote =Mathf.Clamp(150 - (sqrVel / 2), 0, 150);
-		
 		
 		foreach (WheelCollider w in wheelColliders)
 		{
@@ -240,6 +238,7 @@ public class CarControll : MonoBehaviour {
 		{
 			WheelCollider wheelL = wheelColliders[i];
 			WheelCollider wheelR = wheelColliders[i+1];
+		
 			bool groundedL = wheelL.GetGroundHit(out hit);
 			if (groundedL)
 			{

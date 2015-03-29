@@ -12,10 +12,12 @@ public class CyberCameraControll : MonoBehaviour {
 	float eulerY;
 	float eulerZ;
 	Vector3 newRotation;
+	Rigidbody targetRigidbody;
 	
 	void Start() {
 		eulerY = 0f;
 		eulerX = 0f;
+		targetRigidbody = target.GetComponent<Rigidbody>();
 	}
 	
 	void LateUpdate() {
@@ -27,8 +29,7 @@ public class CyberCameraControll : MonoBehaviour {
 		eulerX = eulerX % 360;
 		transform.localEulerAngles = new Vector3(eulerY, 0, 0);
 		
-
-		target.transform.localEulerAngles = new Vector3 (0f, eulerX, 0f);
+		targetRigidbody.MoveRotation( Quaternion.Euler (new Vector3 (0f, eulerX, 0f) ));
 		
 		
 	}
