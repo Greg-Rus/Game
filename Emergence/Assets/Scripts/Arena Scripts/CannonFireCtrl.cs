@@ -13,6 +13,7 @@ public class CannonFireCtrl : MonoBehaviour {
 	public float samplingRate;
 	public float samplingIncrease;
 	public LineRenderer lineRenderer;
+	public GameController myGameController;
 
 	float shotDelta;
 	float shotCharge = 0f;
@@ -21,11 +22,9 @@ public class CannonFireCtrl : MonoBehaviour {
 	float shotSpeed;
 	bool hasHitSomething;
 
-
 	// Use this for initialization
 	void Start () {
-
-
+		myGameController = GameController.instance;
 		shotDelta = maxShotPower - minShotPower;
 
 
@@ -33,24 +32,27 @@ public class CannonFireCtrl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButton (0)) 
+		if(!myGameController.inMainMenu && !myGameController.inMissionMenu)
 		{
-			shotCharge = Mathf.Clamp ( shotCharge + chargeSpeed * Time.deltaTime, 0f, 1f);
-			powerSlider.value = shotCharge;
-			shotSpeed =  minShotPower + shotDelta * shotCharge;
-			//UpdateTrajectory(transform.position, transform.forward,shotSpeed, timePerSegmentInSeconds, maxTravelDistance);
-			UpdateTrajectory2(transform.position, transform.forward *shotSpeed, Physics.gravity);
-		}
-
-		if (Input.GetButtonUp("Fire1")) {
-			GameObject bullet;
-			bullet = Instantiate(bulletPrefab, transform.position, transform.rotation) as GameObject;
-			//bullet.rigidbody.AddForce( transform.forward * (minShotPower + shotDelta * shotCharge));
-			shotSpeed =  minShotPower + shotDelta * shotCharge;
-			bullet.rigidbody.velocity = transform.forward * shotSpeed ;
-			shotCharge = 0f;
-			powerSlider.value = shotCharge;
-			//lineRenderer.SetVertexCount(0);
+			if (Input.GetMouseButton (0)) 
+			{
+				shotCharge = Mathf.Clamp ( shotCharge + chargeSpeed * Time.deltaTime, 0f, 1f);
+				powerSlider.value = shotCharge;
+				shotSpeed =  minShotPower + shotDelta * shotCharge;
+				//UpdateTrajectory(transform.position, transform.forward,shotSpeed, timePerSegmentInSeconds, maxTravelDistance);
+				UpdateTrajectory2(transform.position, transform.forward *shotSpeed, Physics.gravity);
+			}
+	
+			if (Input.GetButtonUp("Fire1")) {
+				GameObject bullet;
+				bullet = Instantiate(bulletPrefab, transform.position, transform.rotation) as GameObject;
+				//bullet.rigidbody.AddForce( transform.forward * (minShotPower + shotDelta * shotCharge));
+				shotSpeed =  minShotPower + shotDelta * shotCharge;
+				bullet.rigidbody.velocity = transform.forward * shotSpeed ;
+				shotCharge = 0f;
+				powerSlider.value = shotCharge;
+				//lineRenderer.SetVertexCount(0);
+			}
 		}
 
 

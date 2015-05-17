@@ -1,13 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Cyberspace Scripts\MemCellSwapper.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\2DExperiment\2DExperiment\Assets\Scripts\BoardController.cs">
     <Files>
-      <File FileName="Assets\Scripts\GameController.cs" Line="28" Column="22" />
-      <File FileName="Assets\Scripts\UI_InteractTrigger.cs" Line="22" Column="4" />
-      <File FileName="Assets\Scripts\CyberCameraControll.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Cyberspace Scripts\MemCellSwapper.cs" Line="140" Column="24" />
-      <File FileName="Assets\Scripts\Arena Scripts\CarControll.cs" Line="239" Column="45" />
-      <File FileName="Assets\AI\Actions\Fire.cs" Line="22" Column="23" />
+      <File FileName="..\..\2DExperiment\2DExperiment\Assets\Scripts\GameControll.cs" Line="78" Column="57" />
+      <File FileName="..\..\2DExperiment\2DExperiment\Assets\Scripts\BoardController.cs" Line="11" Column="27" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -140,6 +140,10 @@ public class ChasingState : FSMState
 		myNav.SetDestination(myController.currentPoI.position);
 		myTargetting.aimTurret(myController.currentPoI);
 	}
+	public override void DoBeforeExiting()
+	{
+		myTargetting.resetTurret();
+	}
 }
 
 public class AttackingState : FSMState

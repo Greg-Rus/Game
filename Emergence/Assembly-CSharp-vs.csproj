@@ -127,6 +127,7 @@
      <Compile Include="Assets\Scripts\Timer.cs" />
      <Compile Include="Assets\Scripts\UI_InteractTrigger.cs" />
      <Compile Include="Assets\Scripts\rotationTogle.cs" />
+     <Compile Include="Assets\Scripts\startSceneController.cs" />
      <Compile Include="Assets\arrayTest.cs" />
      <None Include="Assets\Standard Assets\Projectors\Guidelines.txt" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Basic.shader" />

@@ -7,13 +7,22 @@ public class GameController : MonoBehaviour {
 	public GameObject interactPrompt;
 	public GameObject missionSelectPanel;
 	public GameObject mainMenuPanel;
-	bool inMissionMenu = false;
-	bool inMainMenu = false;
+	public static GameController instance;
+	public bool inMissionMenu = false;
+	public bool inMainMenu = false;
 	string targetedUIInteractable;
-
+	
+	void Awake()
+	{
+		instance = this;
+	}
 	// Use this for initialization
 	void Start () {
-	
+
+		interactPrompt.SetActive(false);
+		missionSelectPanel.SetActive(false);
+		mainMenuPanel.SetActive(false);
+		Screen.showCursor = false;
 	}
 	
 	// Update is called once per frame
@@ -35,7 +44,6 @@ public class GameController : MonoBehaviour {
 	
 	public void playerTargetingInteractable(string interactableName)
 	{
-		Debug.Log("Show prompt");
 		interactPrompt.SetActive(true);
 		targetedUIInteractable = interactableName;
 		
@@ -49,15 +57,19 @@ public class GameController : MonoBehaviour {
 	public void loadTestScene()
 	{
 		hideMissionSelectMenu();
-		Application.LoadLevel(1);
+		Application.LoadLevel(2);
 	}
 	public void loadRAINScene()
 	{
 		hideMissionSelectMenu();
-		Application.LoadLevel(2);
+		Application.LoadLevel(3);
 	}
-	private void showMissionSelectMenu()
+	public void showMissionSelectMenu()
 	{
+		if(inMainMenu)
+		{
+			hideMainMenu();
+		}
 		inMissionMenu = true;
 		missionSelectPanel.SetActive(true);
 		Time.timeScale =0;
@@ -89,7 +101,7 @@ public class GameController : MonoBehaviour {
 	public void startNewGame()
 	{
 		hideMainMenu();
-		Application.LoadLevel(0);
+		Application.LoadLevel(1);
 	}
 	public void quitGame()
 	{
