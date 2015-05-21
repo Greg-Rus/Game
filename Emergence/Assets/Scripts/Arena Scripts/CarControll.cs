@@ -138,7 +138,7 @@ public class CarControll : MonoBehaviour {
 	}
 
 	void RotateWheels(){
-		float deltaTime = Time.fixedDeltaTime;
+		float deltaTime = Time.deltaTime;
 		
 		//wheelTransformMR.Rotate (wheelMR.rpm * 6f *deltaTime, 0, 0);
 		wheelTransformBR.Rotate (wheelBR.rpm * 6f *deltaTime, 0, 0);
@@ -149,7 +149,7 @@ public class CarControll : MonoBehaviour {
 
 	void TurnSteeringWheels() {
 
-		deltaTime = Time.fixedDeltaTime;
+		deltaTime = Time.deltaTime;
 		wheelAngleFL=Mathf.Repeat (wheelAngleFL + deltaTime * wheelFL.rpm * 6f, 360.0f);
 		wheelAngleFR=Mathf.Repeat (wheelAngleFR + deltaTime * wheelFR.rpm * 6f, 360.0f);
 
